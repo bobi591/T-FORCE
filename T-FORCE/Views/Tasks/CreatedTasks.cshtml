@@ -1,0 +1,10 @@
+﻿@model List<T_FORCE.Models.Task>
+
+
+@{
+    foreach (T_FORCE.Models.Task task in Model)
+    {
+        <h1>@task.Name</h1>
+        <p>@task.Description</p>
+    }
+}

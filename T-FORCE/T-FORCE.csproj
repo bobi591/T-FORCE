@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>T_FORCE</RootNamespace>
+    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+    <Folder Include="Views\Tasks\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\css\sb-admin-2.css" />
+    <Content Remove="wwwroot\css\sb-admin-2.min.css" />
+    <Content Remove="wwwroot\js\sb-admin-2.js" />
+    <Content Remove="wwwroot\js\sb-admin-2.min.js" />
+  </ItemGroup>
+</Project>

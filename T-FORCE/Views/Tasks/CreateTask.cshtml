@@ -1,0 +1,50 @@
+﻿<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<form method="post" action="@Url.Action("CreateTask","Tasks")">
+    <label for="tname"><b>Task name</b></label>
+    <input type="text" placeholder="Enter Task Name" name="name" required>
+
+    <label for="tdescription"><b>Task content</b></label>
+    <input type="text" placeholder="Enter Task Content" name="description" required>
+
+    <label for="ttype"><b>Select task type</b></label>
+    <select id="taskTypes" name="taskTypes">
+        <option value="Select">Task type</option>
+    </select>
+
+    <label for="texpiration"><b>Finished until</b></label>
+    <input type="date" placeholder="Enter Task Finish Date" name="expectedEndDate" required>
+
+    <input type="submit" value="Create" />
+</form>
+
+
+<script type="text/javascript">
+    $(function () {
+
+        AjaxCall('/Tasks/GetTaskTypes', null).done(function (response) {
+            if (response.length > 0) {
+                $('#taskTypes').html('');
+                var options = '';
+                for (var i = 0; i < response.length; i++) {
+                    options += '<option name="taskType" value="' + i + '" text="' + response[i]+ '">' + response[i] + '</option>';
+                }
+                $('#taskTypes').append(options);
+
+            }
+        }).fail(function (error) {
+            alert(error.StatusText);
+        });
+
+        function AjaxCall(url, data, type) {
+            return $.ajax({
+                url: url,
+                type: type ? type : 'GET',
+                data: data,
+                contentType: 'application/json'
+            });
+        }
+    });
+</script>
+
+@ViewBag.Message
