@@ -24,7 +24,7 @@
                                     <div class="row">
                                         <div class="col-10">
                                             <label for="tdescription"><b>Description</b></label>
-                                            <p>@task.Description</p>
+                                            <div>@Html.Raw(@task.Description)</div>
                                             <label for="tassignee"><b>Assignee</b></label>
                                             <p>@task.GetAssigneeFirstLastName()</p>
                                             <label for="tstatus"><b>Status</b></label>
@@ -60,7 +60,7 @@
                                                     <div class="row">
                                                         <div class="col-10">
                                                             <label for="tdescription"><b>Description</b></label>
-                                                            <p>@task.Description</p>
+                                                            <div>@Html.Raw(@task.Description)</div>
                                                             <label for="tassignee"><b>Assignee</b></label>
                                                             <p>@task.GetAssigneeFirstLastName()</p>
                                                             <label for="tstatus"><b>Status</b></label>

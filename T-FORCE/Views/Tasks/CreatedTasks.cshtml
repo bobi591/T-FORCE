@@ -19,7 +19,7 @@
                     </div>
                     <div class="card-body">
                         <label for="tdescription"><b>Description</b></label>
-                        <p>@task.Description</p>
+                        <div>@Html.Raw(@task.Description)</div>
                         <label for="tassignee"><b>Assignee</b></label>
                         <p>@task.GetAssigneeFirstLastName()</p>
                     </div>

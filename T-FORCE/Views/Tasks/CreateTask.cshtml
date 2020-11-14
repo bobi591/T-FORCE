@@ -1,5 +1,8 @@
 ﻿@{ ViewData["Title"] = "Create Task"; }
 
+<!--This script inclusion should be here only, because it enables summernote but does not glich the card expansion functionality!-->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
 <div id="container" style="padding: 2%">
     <h1 class="h3 mb-1 text-gray-800">Create Task</h1>
     <p class="mb-4">Create new task by setting it's attributes</p>
@@ -15,7 +18,7 @@
                 <input type="text" class="form-control" placeholder="Enter Task Name" name="name" required>
 
                 <label for="tdescription"><b>Task content</b></label>
-                <input type="text" class="form-control" placeholder="Enter Task Content" name="description" required>
+                <textarea id="summernote" name="description"></textarea>
 
                 <label for="ttype"><b>Select task type</b></label>
                 <select id="taskTypes" name="taskTypes" class="form-control">
@@ -34,6 +37,13 @@
 <!-- Task types options filler -->
 <script type="text/javascript">$(function () {
 
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                placeholder: 'Task description...',
+                tabsize: 1,
+                height: 100
+            });
+        });
         AjaxCall('/Tasks/GetTaskTypes', null).done(function (response) {
             if (response.length > 0) {
                 $('#taskTypes').html('');
