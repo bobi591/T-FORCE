@@ -1,10 +1,95 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@{ ViewData["Title"] = "Dashboard"; }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@model Dictionary<string,List<T_FORCE.Models.Task>>
+@using T_FORCE.UserInterfaceUtils
 
-@ViewBag.Message
+
+
+    <div id="container" style="padding: 2%">
+        <div class="row">
+            <div class="col-5">
+                <h1 class="h3 mb-1 text-gray-800">Created Tasks</h1>
+                <p class="mb-4">Tasks created by you</p>
+
+                @{ foreach (T_FORCE.Models.Task task in Model[PredefinedViewBag.CreatedTasks])
+                    { <!--Created by me Task card-->
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Accordion -->
+                            <a href="#collapseCardCreatedTask-@task.Id" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardCreatedTask-@task.Id">
+                                <h6 class="m-0 font-weight-bold text-primary">@task.Name</h6>
+                            </a>
+                            <!-- Card Content - Collapse -->
+                            <div class="collapse" id="collapseCardCreatedTask-@task.Id" style="">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <label for="tdescription"><b>Description</b></label>
+                                            <p>@task.Description</p>
+                                            <label for="tassignee"><b>Assignee</b></label>
+                                            <p>@task.GetAssigneeFirstLastName()</p>
+                                            <label for="tstatus"><b>Status</b></label>
+                                            <p>@task.TaskStatus</p>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row">
+                                                <button onclick="window.location.href='/Tasks/ViewTask?id=@task.Id'" type="button" class="btn btn-outline-primary" style="margin: 2%;">Open</button>
+                                            </div>
+                                            <div class="row">
+                                                <button href="/Tasks/Archive?id=@task.Id" ype="button" class="btn btn-outline-warning" style="margin: 2%;">Archive</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> } }
+            </div>
+            <div class="col-5">
+                <h1 class="h3 mb-1 text-gray-800">Assigned Tasks</h1>
+                <p class="mb-4">Tasks assigned to you</p>
+
+                @{ foreach (T_FORCE.Models.Task task in Model[PredefinedViewBag.AssignedTasks])
+                    { <!--Assigned Task card-->
+                                        <div class="card shadow mb-4">
+                                            <!-- Card Header - Accordion -->
+                                            <a href="#collapseCardAssignedTask-@task.Id" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardAssignedTask-@task.Id">
+                                                <h6 class="m-0 font-weight-bold text-primary">@task.Name</h6>
+                                            </a>
+                                            <!-- Card Content - Collapse -->
+                                            <div class="collapse" id="collapseCardAssignedTask-@task.Id" style="">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-10">
+                                                            <label for="tdescription"><b>Description</b></label>
+                                                            <p>@task.Description</p>
+                                                            <label for="tassignee"><b>Assignee</b></label>
+                                                            <p>@task.GetAssigneeFirstLastName()</p>
+                                                            <label for="tstatus"><b>Status</b></label>
+                                                            <p>@task.TaskStatus</p>
+                                                        </div>
+                                                        <div class="col">
+                                                            <div class="row">
+                                                                <button onclick="window.location.href='/Tasks/ViewTask?id=@task.Id'" type="button" class="btn btn-outline-primary" style="margin: 2%;">Open</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> } }
+            </div>
+            <div class="col" style="margin-top: 6%; padding-left: 3%">
+                <div class="row">
+                    <p>Tasks assigned to me: @Model[PredefinedViewBag.AssignedTasks].Count</p>
+                </div>
+                <div class="row">
+                    <p>Tasks created by me: @Model[PredefinedViewBag.CreatedTasks].Count</p>
+                </div>
+                <div class="row">
+                    <button onclick="window.location.href='/Tasks/CreateTask'" type="button" class="btn btn-outline-success" style="margin: 2%;">Create task</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+        @ViewBag.Message

@@ -15,5 +15,7 @@ namespace T_FORCE.UserInterfaceUtils
         public const string EmailNotUnique = "The email is already in use!";
         public const string BadEmailFormat = "The provided email is invalid!";
         public const string RegisterSuccess = "Register success!";
+        public const string AssignedTasks = "Assigned Tasks";
+        public const string CreatedTasks = "CreatedTasks";
     }
 }

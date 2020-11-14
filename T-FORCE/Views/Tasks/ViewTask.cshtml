@@ -1,6 +1,6 @@
 ﻿@model T_FORCE.Models.Task
 
-@{ ViewData["Title"] = "Create Task"; }
+@{ ViewData["Title"] = Model.Id+" - "+Model.Name; }
 
 <div id="container" style="padding: 2%">
     <div class="card shadow mb-4">
@@ -33,7 +33,7 @@
                         <button data-toggle="modal" data-target="#changeStatusModal" type="button" class="btn btn-outline-primary" style="margin: 2%;">Change status</button>
                     </div>
                     <div class="row">
-                        <button href="/Tasks/ChangeStatus?id=@Model.Id" ype="button" class="btn btn-outline-warning" style="margin: 2%;">Archive</button>
+                        <button href="/Tasks/Archive?id=@Model.Id" ype="button" class="btn btn-outline-warning" style="margin: 2%;">Archive</button>
                     </div>
                 </div>
             </div>
@@ -76,7 +76,12 @@
                 $('#taskStatuses').html('');
                 var options = '';
                 for (var i = 1; i < response.length; i++) {
-                    options += '<option name="taskStatus" value="' + i + '" text="' + response[i] + '">' + response[i] + '</option>';
+                    if (response[i] === '@Model.TaskStatus') {
+                        options += '<option selected name="taskStatus" value="' + i + '" text="' + response[i] + '">' + response[i] + '</option>';
+                    }
+                    else {
+                        options += '<option name="taskStatus" value="' + i + '" text="' + response[i] + '">' + response[i] + '</option>';
+                    }
                 }
                 $('#taskStatuses').append(options);
 
