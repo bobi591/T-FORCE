@@ -1,33 +1,45 @@
-﻿<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+﻿@{ ViewData["Title"] = "Create Task"; }
 
-<form method="post" action="@Url.Action("CreateTask","Tasks")">
-    <label for="tname"><b>Task name</b></label>
-    <input type="text" placeholder="Enter Task Name" name="name" required>
-
-    <label for="tdescription"><b>Task content</b></label>
-    <input type="text" placeholder="Enter Task Content" name="description" required>
-
-    <label for="ttype"><b>Select task type</b></label>
-    <select id="taskTypes" name="taskTypes">
-        <option value="Select">Task type</option>
-    </select>
-
-    <label for="texpiration"><b>Finished until</b></label>
-    <input type="date" placeholder="Enter Task Finish Date" name="expectedEndDate" required>
-
-    <input type="submit" value="Create" />
-</form>
+<div id="container" style="padding: 2%">
+    <h1 class="h3 mb-1 text-gray-800">Create Task</h1>
+    <p class="mb-4">Create new task by setting it's attributes</p>
 
 
-<script type="text/javascript">
-    $(function () {
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">New task attributes</h6>
+        </div>
+        <div class="card-body">
+            <form method="post" action="@Url.Action("CreateTask","Tasks")">
+                <label for="tname"><b>Task name</b></label>
+                <input type="text" class="form-control" placeholder="Enter Task Name" name="name" required>
+
+                <label for="tdescription"><b>Task content</b></label>
+                <input type="text" class="form-control" placeholder="Enter Task Content" name="description" required>
+
+                <label for="ttype"><b>Select task type</b></label>
+                <select id="taskTypes" name="taskTypes" class="form-control">
+                    <option value="Select">Task type</option>
+                </select>
+
+                <label for="texpiration"><b>Finished until</b></label>
+                <input type="date" class="form-control" placeholder="Enter Task Finish Date" name="expectedEndDate" required>
+                <div class="my-2"></div>
+                <input class="btn btn-primary" type="submit" value="Create" />
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Task types options filler -->
+<script type="text/javascript">$(function () {
 
         AjaxCall('/Tasks/GetTaskTypes', null).done(function (response) {
             if (response.length > 0) {
                 $('#taskTypes').html('');
                 var options = '';
                 for (var i = 0; i < response.length; i++) {
-                    options += '<option name="taskType" value="' + i + '" text="' + response[i]+ '">' + response[i] + '</option>';
+                    options += '<option name="taskType" value="' + i + '" text="' + response[i] + '">' + response[i] + '</option>';
                 }
                 $('#taskTypes').append(options);
 
@@ -44,7 +56,6 @@
                 contentType: 'application/json'
             });
         }
-    });
-</script>
+    });</script>
 
 @ViewBag.Message

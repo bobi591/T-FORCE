@@ -17,9 +17,9 @@ namespace T_FORCE.Processes
         private AppDbContext appDbContext = IAppDbContextFactory.CreateAppDbContext();
 
         /// <summary>
-        /// Performs the whole registration process.
+        /// Performs the whole registration process. Returns viewbag message string.
         /// </summary>
-        public void Register(User user, out string viewbagMessage)
+        public async System.Threading.Tasks.Task<string> Register(User user)
         {
             if (IsUsernameUnique(user.Username))
             {
@@ -28,22 +28,22 @@ namespace T_FORCE.Processes
                     if (IsValidEmail(user.Email))
                     {
                         appDbContext.Add(user);
-                        appDbContext.SaveChanges();
-                        viewbagMessage = PredefinedViewBag.RegisterSuccess;
+                        await appDbContext.SaveChangesAsync();
+                        return PredefinedViewBag.RegisterSuccess;
                     }
                     else
                     {
-                        viewbagMessage = PredefinedViewBag.BadEmailFormat;
+                        return PredefinedViewBag.BadEmailFormat;
                     }
                 }
                 else
                 {
-                    viewbagMessage = PredefinedViewBag.EmailNotUnique;
+                    return PredefinedViewBag.EmailNotUnique;
                 }
             }
             else
             {
-                viewbagMessage = PredefinedViewBag.UsernameNotUnique;
+                return PredefinedViewBag.UsernameNotUnique;
             }
         }
 

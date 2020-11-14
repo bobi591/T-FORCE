@@ -49,6 +49,7 @@ namespace T_FORCE.Models
             task.CreatedBy = createdByUserId;
             task.DateCreated = dateCreated;
             task.ExpectedEndDate = expectedEndDate;
+            task.TaskStatus = TaskStatus.Created;
 
             if (parentTaskId.HasValue)
             {

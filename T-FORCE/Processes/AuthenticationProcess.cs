@@ -27,17 +27,18 @@ namespace T_FORCE.Processes
 
 
         /// <summary>
-        /// Returns a ClaimsPrincipal used in the User controller for authentication and output for viewbag messages
+        /// Returns a tuple of ClaimsPrincipal and viewbag message used in the User controller for authentication and output for viewbag messages
         /// </summary>
-        public ClaimsPrincipal GetClaimsPrincipal(string username, string password, out string viewbagMessage)
+        public async Task<Tuple<ClaimsPrincipal,string>> GetClaimsPrincipal(string username, string password)
         {
 
             User user = RetrieveUserObject(username);
+            string viewbagMessage;
 
             if (user == default)
             {
                 viewbagMessage = PredefinedViewBag.NoSuchUserFound;
-                return null;
+                return new Tuple<ClaimsPrincipal, string>(null, viewbagMessage);
             }
             else
             {
@@ -46,20 +47,20 @@ namespace T_FORCE.Processes
                     if (IsUserNotLocked(user))
                     {
                         viewbagMessage = PredefinedViewBag.LoginSuccess;
-                        ResetBadAttemptsOnAuthSuccess(ref user);
-                        return GetClaimsPrincipal(user);
+                        await ResetBadAttemptsOnAuthSuccess(user);
+                        return new Tuple<ClaimsPrincipal, string>(GetClaimsPrincipal(user),viewbagMessage);
                     }
                     else
                     {
                         viewbagMessage = PredefinedViewBag.UserIsBlocked;
-                        return null;
+                        return new Tuple<ClaimsPrincipal, string>(null, viewbagMessage);
                     }
                 }
                 else
                 {
                     viewbagMessage = PredefinedViewBag.BadLoginAttempt;
-                    BadAttemptProcess(ref user);
-                    return null;
+                    BadAttemptProcess(user);
+                    return new Tuple<ClaimsPrincipal, string>(null, viewbagMessage);
                 }
             }
 
@@ -96,7 +97,7 @@ namespace T_FORCE.Processes
             }
         }
 
-        private void BadAttemptProcess(ref User user)
+        private async void BadAttemptProcess(User user)
         {
             if(user.LastLoginAttempt.AddMinutes(2) > DateTime.UtcNow && user.LoginAttempts == 3)
             {
@@ -108,7 +109,7 @@ namespace T_FORCE.Processes
                 user.LoginAttempts++;
             }
 
-            appDbContext.SaveChanges();
+            await appDbContext.SaveChangesAsync();
         }
 
         private ClaimsPrincipal GetClaimsPrincipal(User user)
@@ -128,10 +129,10 @@ namespace T_FORCE.Processes
 
         }
 
-        private void ResetBadAttemptsOnAuthSuccess(ref User user)
+        private async System.Threading.Tasks.Task ResetBadAttemptsOnAuthSuccess(User user)
         {
             user.LoginAttempts = 0;
-            appDbContext.SaveChanges();
+            await appDbContext.SaveChangesAsync();
         }
     }
 }

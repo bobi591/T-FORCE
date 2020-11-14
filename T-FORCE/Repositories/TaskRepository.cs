@@ -43,21 +43,41 @@ namespace T_FORCE.Repositories
         /// <summary>
         /// Put assignee to the task.
         /// </summary>
-        public void AssignTask(string username, int taskId)
+        public async System.Threading.Tasks.Task AssignTask(string username, int taskId)
         {
             Task task = GetTaskById(taskId);
             int userId = appDbContext.Users.Where(user => user.Username == username).First().Id;
             task.AssignedTo = userId;
-            appDbContext.SaveChanges();
+            await appDbContext.SaveChangesAsync();
         }
 
         /// <summary>
         /// Save the passed Task object into the database.
         /// </summary>
-        public void SaveTask(Task task)
+        public async System.Threading.Tasks.Task SaveTask(Task task)
         {
             appDbContext.Add(task);
-            appDbContext.SaveChanges();
+            await appDbContext.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Update the passed Task object into the database.
+        /// </summary>
+        public async System.Threading.Tasks.Task UpdateTask(Task task)
+        {
+            appDbContext.Update(task);
+            await appDbContext.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// Get task by id.
+        /// </summary>
+        public Task GetTaskById(string id)
+        {
+
+            Task task = appDbContext.Tasks.Where(task => task.Id == int.Parse(id)).First();
+
+            return task;
         }
     }
 }

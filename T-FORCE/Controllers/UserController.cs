@@ -16,12 +16,10 @@ namespace T_FORCE.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginAsync(string username, string password, string remember)
         {
-
-            string viewbagMessage;
-
             Authenticate authProcess = new Authenticate();
-            ClaimsPrincipal currentClaimsPrincipal = authProcess.GetClaimsPrincipal(username, password, out viewbagMessage);
-            ViewBag.Message = viewbagMessage;
+            Tuple<ClaimsPrincipal,string> authProcessResult = await authProcess.GetClaimsPrincipal(username, password);
+            ClaimsPrincipal currentClaimsPrincipal = authProcessResult.Item1;
+            ViewBag.Message = authProcessResult.Item2;
 
             if (currentClaimsPrincipal != null)
             {
@@ -46,7 +44,7 @@ namespace T_FORCE.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register
+        public async Task<IActionResult> Register
             (string username, string password, string email, string firstName, string lastName, string passwordRepeat)
         {
             string viewbagMessage;
@@ -65,7 +63,7 @@ namespace T_FORCE.Controllers
                     (UserOrganization.Open, username, password, email, firstName, lastName);
 
                 RegistrationProcess registrationProcess = new RegistrationProcess();
-                registrationProcess.Register(user, out viewbagMessage);
+                viewbagMessage = await registrationProcess.Register(user);
 
                 ViewBag.Message = viewbagMessage;
 

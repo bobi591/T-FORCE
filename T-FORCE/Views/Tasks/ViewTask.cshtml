@@ -1,0 +1,97 @@
+﻿@model T_FORCE.Models.Task
+
+@{ ViewData["Title"] = "Create Task"; }
+
+<div id="container" style="padding: 2%">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">@Model.Name</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-8">
+                    <label for="tdescription"><b>Description</b></label>
+                    <p>@Model.Description</p>
+                </div>
+                <div class="col">
+                    <label for="tstatus"><b>Status</b></label>
+                    <p>@Model.TaskStatus</p>
+                    <label for="ttype"><b>Type</b></label>
+                    <p>@Model.Type</p>
+                    <label for="tdatecreated"><b>Date created</b></label>
+                    <p>@Model.DateCreated</p>
+                    <label for="texpectedenddate"><b>Expected end date</b></label>
+                    <p>@Model.ExpectedEndDate</p>
+                    <label for="tassignee"><b>Assignee</b></label>
+                    <p>@Model.GetAssigneeFirstLastName()</p>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <button onclick="window.location.href='/Tasks/AssignToMe?id=@Model.Id'" type="button" class="btn btn-outline-success" style="margin: 2%;">Assign to me</button>
+                    </div>
+                    <div class="row">
+                        <button data-toggle="modal" data-target="#changeStatusModal" type="button" class="btn btn-outline-primary" style="margin: 2%;">Change status</button>
+                    </div>
+                    <div class="row">
+                        <button href="/Tasks/ChangeStatus?id=@Model.Id" ype="button" class="btn btn-outline-warning" style="margin: 2%;">Archive</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Change status modal -->
+<div class="modal fade" id="changeStatusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Change status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="@Url.Action("ChangeTaskStatus","Tasks")">
+                <input type="text" name="taskId" hidden value="@Model.Id">
+                <div class="modal-body">
+                    <select id="taskStatuses" name="taskStatuses" class="form-control">
+                        <option value="Select">Task status</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Save Changes">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Task status options filler -->
+<script type="text/javascript">
+    $(function () {
+
+        AjaxCall('/Tasks/GetTaskStatuses', null).done(function (response) {
+            if (response.length > 0) {
+                $('#taskStatuses').html('');
+                var options = '';
+                for (var i = 1; i < response.length; i++) {
+                    options += '<option name="taskStatus" value="' + i + '" text="' + response[i] + '">' + response[i] + '</option>';
+                }
+                $('#taskStatuses').append(options);
+
+            }
+        }).fail(function (error) {
+            alert(error.StatusText);
+        });
+
+        function AjaxCall(url, data, type) {
+            return $.ajax({
+                url: url,
+                type: type ? type : 'GET',
+                data: data,
+                contentType: 'application/json'
+            });
+        }
+    });
+</script>
