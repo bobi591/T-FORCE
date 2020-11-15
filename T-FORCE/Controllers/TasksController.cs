@@ -64,8 +64,7 @@ namespace T_FORCE.Controllers
             return View("ViewTask",requestedTask);
         }
 
-        [Authorize]
-        [HttpPost]
+        [Authorize][HttpPost]
         public async Task<IActionResult> ChangeTaskStatus(string taskStatuses, string taskId)
         {
             TaskRepository taskRepository = new TaskRepository();
@@ -78,7 +77,6 @@ namespace T_FORCE.Controllers
 
             return View("ViewTask", task);
         }
-
 
         [Authorize]
         public JsonResult GetTaskTypes()
@@ -101,6 +99,7 @@ namespace T_FORCE.Controllers
             {
                 taskStatuses.Add(status.ToString());
             }
+
             return Json(taskStatuses);
         }
     }

@@ -29,6 +29,7 @@ namespace T_FORCE
 
         public DbSet<User> Users { get; set; }
         public DbSet<Task> Tasks { get; set; }
+        public DbSet<KanbanBoard> KanbanBoards { get; set; }
     }
 
     /// <summary>

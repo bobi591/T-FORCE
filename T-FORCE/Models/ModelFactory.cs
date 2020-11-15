@@ -81,5 +81,42 @@ namespace T_FORCE.Models
 
             return task;
         }
+
+        /// <summary>
+        /// Creates Kanban Board object with mandatory attributes.
+        /// </summary>
+        public KanbanBoard CreateKanbanBoard(string name, int createdByUserId, DateTime dateCreated)
+        {
+
+            KanbanBoard kanbanBoard = new KanbanBoard();
+
+            kanbanBoard.Name = name;
+            kanbanBoard.NumberOfColumns = 0;
+            kanbanBoard.Columns = "";
+            kanbanBoard.Swims = "";
+            kanbanBoard.CreatedBy = createdByUserId;
+            kanbanBoard.DateCreated = dateCreated;
+
+            return kanbanBoard;
+        }
+
+        /// <summary>
+        /// Creates typical Kanban Board object with mandatory attributes.
+        /// </summary>
+        public KanbanBoard CreateTypicalKanbanBoard(string name, int createdByUserId, DateTime dateCreated)
+        {
+
+            KanbanBoard kanbanBoard = new KanbanBoard();
+
+            kanbanBoard.Name = name;
+            kanbanBoard.Swims = "";
+            kanbanBoard.CreatedBy = createdByUserId;
+            kanbanBoard.DateCreated = dateCreated;
+
+            List<string> typicalColumns = new List<string>() { "Investigation", "In Progress", "Done" };
+            kanbanBoard.SetColumns(typicalColumns);
+
+            return kanbanBoard;
+        }
     }
 }

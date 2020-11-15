@@ -56,7 +56,7 @@ namespace T_FORCE.Repositories
         /// </summary>
         public async System.Threading.Tasks.Task SaveTask(Task task)
         {
-            appDbContext.Add(task);
+            await appDbContext.AddAsync(task);
             await appDbContext.SaveChangesAsync();
         }
 
@@ -78,6 +78,26 @@ namespace T_FORCE.Repositories
             Task task = appDbContext.Tasks.Where(task => task.Id == int.Parse(id)).First();
 
             return task;
+        }
+
+        /// <summary>
+        /// Gets the list of tasks in specific column in specific kanbanboard.
+        /// </summary>
+        public List<Task> GetTasksInKanbanboardColumn(int kanbanBoardId, int columnNumber)
+        {
+            KanbanBoard kanbanBoard = appDbContext.KanbanBoards.Where(board => board.Id == kanbanBoardId).First();
+            if (kanbanBoard.Swims == "" || kanbanBoard.Swims == null)
+            {
+                return null;
+            }
+            else
+            {
+                List<int> taskIdInColumn = kanbanBoard.GetSwim()[columnNumber];
+
+
+                List<Task> tasksInColumn = appDbContext.Tasks.Where(task => taskIdInColumn.Contains(task.Id)).ToList();
+                return tasksInColumn;
+            }
         }
     }
 }

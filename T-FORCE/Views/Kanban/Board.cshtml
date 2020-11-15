@@ -1,0 +1,97 @@
+﻿@model KanbanBoard
+@using T_FORCE.Repositories;
+
+@{ ViewData["Title"] = Model.Name; }
+
+
+    <div id="container" style="padding: 2%">
+        <h1 class="h4 mb-1 text-gray-800" style="padding-bottom:1%;">Kanban Board - @Model.Name</h1>
+
+        <button type="button" class="btn btn-outline-success" style="margin-right:1%;margin-bottom:1%;">Add column</button>
+        <button type="button" data-toggle="modal" data-target="#addTaskModal" class="btn btn-outline-success" style="margin-right:1%;margin-bottom:1%;">Add task</button>
+        <button type="button" class="btn btn-outline-danger" style="margin-right:1%;margin-bottom:1%;">Remove column</button>
+        <button type="button" class="btn btn-outline-danger" style="margin-right:1%;margin-bottom:1%;">Remove task</button>
+
+        <div class="row">
+            @{
+                TaskRepository taskRepository = new TaskRepository();
+
+                for (int columnNumber = 0; columnNumber < Model.NumberOfColumns; columnNumber++)
+                {
+                    <div class="col border bg-light" name="@Model.GetColumns()[columnNumber].Replace(" ","_").ToUpper()">
+                        <h1 class="h5 mb-1 text-gray-800 text-center">@Model.GetColumns()[columnNumber]</h1>
+                        @{
+                            List<T_FORCE.Models.Task> tasksInCurrentColumn = taskRepository.GetTasksInKanbanboardColumn(Model.Id, columnNumber + 1);
+
+                            if (tasksInCurrentColumn != null)
+                            {
+                                foreach (T_FORCE.Models.Task task in tasksInCurrentColumn)
+                                {
+                                    <!--Task collapsable card-->
+                                    <div class="card shadow mb-4">
+                                        <!-- Card Header - Accordion -->
+                                        <a href="#collapseCardCreatedTask-@task.Id" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardCreatedTask-@task.Id">
+                                            <h6 class="m-0 font-weight-bold text-primary">@task.Name</h6>
+                                        </a>
+                                        <!-- Card Content - Collapse -->
+                                        <div class="collapse" id="collapseCardCreatedTask-@task.Id" style="">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-10">
+                                                        <label for="tdescription"><b>Description</b></label>
+                                                        <div>@Html.Raw(@task.Description)</div>
+                                                        <label for="tassignee"><b>Assignee</b></label>
+                                                        <p>@task.GetAssigneeFirstLastName()</p>
+                                                        <label for="tstatus"><b>Status</b></label>
+                                                        <p>@task.TaskStatus</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        }
+
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+
+<!-- Add task modal -->
+<div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add task to the dashboard</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="@Url.Action("AddTask","Kanban")">
+                <label for="taskId">Board ID</label>
+                <input type="text" class="form-control form-control-user"
+                       id="boardId" name="boardId" value="@Model.Id" readonly>
+                <label for="taskId">Task to add</label>
+                <input type="text" class="form-control form-control-user"
+                       id="taskId" name="taskId" placeholder="Task ID..." required>
+                <label for="columnSelector">Column</label>
+                <select id="columnSelector" name="columnSelector" class="form-control" required>
+                    @{
+                        foreach (string column in Model.GetColumns())
+                        {
+                            <option value="@column">@column</option>
+                        }
+                    }
+
+                </select>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Save Changes">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

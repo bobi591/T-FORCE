@@ -15,6 +15,7 @@
   <ItemGroup>
     <Folder Include="Repositories\" />
     <Folder Include="Views\Tasks\" />
+    <Folder Include="Views\Kanban\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\css\sb-admin-2.css" />
