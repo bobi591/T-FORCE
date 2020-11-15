@@ -92,11 +92,17 @@ namespace T_FORCE.Repositories
             }
             else
             {
-                List<int> taskIdInColumn = kanbanBoard.GetSwim()[columnNumber];
+                Dictionary<int, List<int>> swims = kanbanBoard.GetSwim();
+                if (swims.ContainsKey(columnNumber))
+                {
+                    List<int> taskIdInColumn = kanbanBoard.GetSwim()[columnNumber];
 
 
-                List<Task> tasksInColumn = appDbContext.Tasks.Where(task => taskIdInColumn.Contains(task.Id)).ToList();
-                return tasksInColumn;
+                    List<Task> tasksInColumn = appDbContext.Tasks.Where(task => taskIdInColumn.Contains(task.Id)).ToList();
+                    return tasksInColumn;
+                }
+
+                return null;
             }
         }
     }

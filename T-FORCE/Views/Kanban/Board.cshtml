@@ -45,6 +45,14 @@
                                                         <label for="tstatus"><b>Status</b></label>
                                                         <p>@task.TaskStatus</p>
                                                     </div>
+                                                    <div class="col">
+                                                        <div class="row">
+                                                            <button onclick="window.location.href='/Tasks/ViewTask?id=@task.Id'" type="button" class="btn btn-outline-primary" style="margin: 2%;">Open</button>
+                                                        </div>
+                                                        <div class="row">
+                                                            <button href="/Tasks/Archive?id=@task.Id" ype="button" class="btn btn-outline-warning" style="margin: 2%;">Archive</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -78,7 +86,7 @@
                 <input type="text" class="form-control form-control-user"
                        id="taskId" name="taskId" placeholder="Task ID..." required>
                 <label for="columnSelector">Column</label>
-                <select id="columnSelector" name="columnSelector" class="form-control" required>
+                <select id="columnDesc" name="columnDesc" class="form-control" required>
                     @{
                         foreach (string column in Model.GetColumns())
                         {

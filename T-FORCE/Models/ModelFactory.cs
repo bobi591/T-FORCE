@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using T_FORCE.Processes;
 
 namespace T_FORCE.Models
@@ -39,7 +40,7 @@ namespace T_FORCE.Models
         /// Creates task object with mandatory attributes.
         /// </summary>
         public Task CreateTask(string name, string description, TaskType type, int createdByUserId,
-            DateTime dateCreated, DateTime expectedEndDate, int? parentTaskId)
+            DateTime dateCreated, DateTime expectedEndDate, string projectCode,  int? parentTaskId)
         {
             Task task = new Task();
 
@@ -49,6 +50,7 @@ namespace T_FORCE.Models
             task.CreatedBy = createdByUserId;
             task.DateCreated = dateCreated;
             task.ExpectedEndDate = expectedEndDate;
+            task.ProjectCode = projectCode;
             task.TaskStatus = TaskStatus.Created;
 
             if (parentTaskId.HasValue)
@@ -85,14 +87,14 @@ namespace T_FORCE.Models
         /// <summary>
         /// Creates Kanban Board object with mandatory attributes.
         /// </summary>
-        public KanbanBoard CreateKanbanBoard(string name, int createdByUserId, DateTime dateCreated)
+        public KanbanBoard CreateKanbanBoard(string name, int createdByUserId, DateTime dateCreated, int numberOfColumns, List<string> columnNames)
         {
 
             KanbanBoard kanbanBoard = new KanbanBoard();
 
             kanbanBoard.Name = name;
-            kanbanBoard.NumberOfColumns = 0;
-            kanbanBoard.Columns = "";
+            kanbanBoard.NumberOfColumns = numberOfColumns;
+            kanbanBoard.Columns = JsonConvert.SerializeObject(columnNames);
             kanbanBoard.Swims = "";
             kanbanBoard.CreatedBy = createdByUserId;
             kanbanBoard.DateCreated = dateCreated;
@@ -101,7 +103,7 @@ namespace T_FORCE.Models
         }
 
         /// <summary>
-        /// Creates typical Kanban Board object with mandatory attributes.
+        /// Creates typical (Investigation, In Progress, Done) Kanban Board object with mandatory attributes.
         /// </summary>
         public KanbanBoard CreateTypicalKanbanBoard(string name, int createdByUserId, DateTime dateCreated)
         {
@@ -117,6 +119,22 @@ namespace T_FORCE.Models
             kanbanBoard.SetColumns(typicalColumns);
 
             return kanbanBoard;
+        }
+
+        /// <summary>
+        /// Creates Project object with mandatory attributes.
+        /// </summary>
+        public Project CreateProject(string name, string code, int createdByUserId, DateTime dateCreated)
+        {
+            Project project = new Project();
+
+            project.Name = name;
+            project.Code = code;
+            project.CreatedBy = createdByUserId;
+            project.DateCreated = dateCreated;
+            project.KanbanBoards = "";
+
+            return project;
         }
     }
 }

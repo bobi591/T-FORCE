@@ -23,6 +23,8 @@ namespace T_FORCE.Models
         public DateTime ExpectedEndDate { get; set; }
         [Required]
         public TaskStatus TaskStatus { get; set; }
+        [Required]
+        public string ProjectCode { get; set; }
 
         public int AssignedTo { get; set; }
         public DateTime EndDate { get; set; }

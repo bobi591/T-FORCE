@@ -29,6 +29,12 @@ namespace T_FORCE.Models
         public DateTime LastLoginAttempt { get; set; }
         [Required]
         public bool IsBlocked { get; set; }
+
+
+        public string GetFirstNameLastName()
+        {
+            return this.FirstName + " " + this.LastName;
+    }
     }
 
     public enum UserOrganization

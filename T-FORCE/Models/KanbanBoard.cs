@@ -23,6 +23,10 @@ namespace T_FORCE.Models
         [Required]
         public DateTime DateCreated { get; set; }
 
+        //The property here is used for data transfer between Kaban Controller and the CreateBoard view.
+        [NotMapped]
+        public List<string> ColumnsList = new List<string>();
+
         /// <summary>
         /// Creates columns with in the kanban board.
         /// </summary>
@@ -48,13 +52,13 @@ namespace T_FORCE.Models
         /// </summary>
         public Dictionary<int,List<int>> GetSwim()
         {
-            if (Swims != null)
+            if (Swims != "")
             {
                 return JsonConvert.DeserializeObject<Dictionary<int, List<int>>>(this.Swims);
             }
             else
             {
-                return null;
+                return new Dictionary<int, List<int>>();
             }
         }
 
@@ -64,16 +68,21 @@ namespace T_FORCE.Models
         public void AddSwim(int columnNumber, int taskId)
         {
             Dictionary<int, List<int>> swimValue = GetSwim();
-            if (swimValue != null)
+            if (!swimValue.ContainsKey(columnNumber))
             {
-                if (swimValue[columnNumber] == null)
-                {
-                    swimValue[columnNumber] = new List<int>();
-                }
-
-                swimValue[columnNumber].Add(taskId);
-                this.Swims = JsonConvert.SerializeObject(swimValue);
+                swimValue.Add(columnNumber, new List<int>());
             }
+            swimValue[columnNumber].Add(taskId);
+            this.Swims = JsonConvert.SerializeObject(swimValue);
+        }
+
+        /// <summary>
+        /// Finds the column number by providing the column text.
+        /// </summary>
+        public int GetColumnNumber(string columnText)
+        {
+            return this.GetColumns().
+                FindIndex(c => c == columnText) + 1;
         }
 
     }

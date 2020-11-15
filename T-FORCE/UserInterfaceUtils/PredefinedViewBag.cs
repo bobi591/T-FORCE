@@ -17,5 +17,7 @@ namespace T_FORCE.UserInterfaceUtils
         public const string RegisterSuccess = "Register success!";
         public const string AssignedTasks = "Assigned Tasks";
         public const string CreatedTasks = "CreatedTasks";
+        public const string ProjectNotUnqiue = "The project name or code is already in use!";
+        public const string ProjectCreated = "The project was created successfully!";
     }
 }

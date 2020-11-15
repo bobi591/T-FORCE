@@ -23,6 +23,10 @@ namespace T_FORCE
             //Fluent API for composite primary key in User model
             modelBuilder.Entity<User>()
                 .HasKey(user => new { user.Id, user.Username, user.Email });
+
+            //Fluent API for composite primary key in Project model
+            modelBuilder.Entity<Project>()
+                .HasKey(project => new { project.Id, project.Name , project.Code });
         }
 
         //Entities
@@ -30,6 +34,7 @@ namespace T_FORCE
         public DbSet<User> Users { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<KanbanBoard> KanbanBoards { get; set; }
+        public DbSet<Project> Projects { get; set; }
     }
 
     /// <summary>
@@ -42,9 +47,11 @@ namespace T_FORCE
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             optionsBuilder
-                .UseSqlServer(@"Server=192.168.0.8,1433;Database=DEVTFORCE;User Id=SA;Password=Boby1998;");
+                .UseSqlServer(@"Server=192.168.0.6,1433;Database=DEVTFORCE;User Id=SA;Password=Boby1998;");
 
             AppDbContext appDbContext = new AppDbContext(optionsBuilder.Options);
+
+
 
             appDbContext.Database.EnsureCreated();
 

@@ -1,11 +1,13 @@
 ﻿@model T_FORCE.Models.Task
+@using T_FORCE.Repositories;
 
-@{ ViewData["Title"] = Model.Id+" - "+Model.Name; }
+@{ ViewData["Title"] = Model.ProjectCode+Model.Id+" - "+Model.Name;
+    ProjectRepository projectRepository = new ProjectRepository();}
 
 <div id="container" style="padding: 2%">
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">@Model.Name</h6>
+            <h6 class="m-0 font-weight-bold text-primary">@Model.ProjectCode@Model.Id - @Model.Name</h6>
         </div>
         <div class="card-body">
             <div class="row">
@@ -14,6 +16,8 @@
                     <div>@Html.Raw(@Model.Description)</div>
                 </div>
                 <div class="col">
+                    <label for="tid"><b>Task ID</b></label>
+                    <p>@Model.Id</p>
                     <label for="tstatus"><b>Status</b></label>
                     <p>@Model.TaskStatus</p>
                     <label for="ttype"><b>Type</b></label>
@@ -24,6 +28,8 @@
                     <p>@Model.ExpectedEndDate</p>
                     <label for="tassignee"><b>Assignee</b></label>
                     <p>@Model.GetAssigneeFirstLastName()</p>
+                    <label for="tProject"><b>Project</b></label>
+                    <p>@projectRepository.GetProjectByCode(Model.ProjectCode).Name</p>
                 </div>
                 <div class="col">
                     <div class="row">

@@ -1,0 +1,54 @@
+﻿@using T_FORCE.Repositories;
+
+@{ ViewData["Title"] = "Create new Kanban board"; }
+
+
+<div id="container" style="padding: 2%">
+    <h1 class="h3 mb-1 text-gray-800">Create Kanban board</h1>
+    <p class="mb-4">Create new Kanban board by setting it's attributes</p>
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">New Kanban board attributes</h6>
+        </div>
+        <div class="card-body" name="card-body" id="card-body">
+            <form method="post" action="@Url.Action("CreateBoard","Kanban")">
+                <div id="options" name="options">
+                    <label for="bname"><b>Board name</b></label>
+                    <input id="name" type="text" class="form-control" placeholder="Enter board name" name="name" required>
+
+                    <label for="bColumnName"><b>Column name</b></label>
+                    <input type="text" class="form-control" placeholder="Enter column name" name="columnName" required>
+                </div>
+                <div class="my-2">
+                    <input class="btn btn-primary" onclick="GenerateColumnNameInput()" type="button" value="Add column" />
+                    <input class="btn btn-success" onclick="PostToController()" type="submit" value="Create" />
+                    <input class="btn btn-danger" onclick="window.location.href='/'" type="button" value="Cancel" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Dynamic options menu for column names based on the number of columns -->
+<script type="text/javascript">
+    function GenerateColumnNameInput() {
+        var input = document.createElement("input");
+        input.setAttribute('type', 'text');
+        input.setAttribute('class', 'form-control');
+        input.setAttribute('placeholder', 'Enter column name');
+        input.setAttribute('name', 'columnName');
+        input.setAttribute('required', '');
+
+        var label = document.createElement("label");
+        label.setAttribute('for', 'bColumnName');
+        label.innerHTML = "<b>Column name</b>";
+
+        var parent = document.getElementById("options");
+
+        parent.appendChild(label);
+        parent.appendChild(input);
+    }
+</script>

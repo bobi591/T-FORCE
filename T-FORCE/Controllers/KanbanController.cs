@@ -16,15 +16,22 @@ namespace T_FORCE.Controllers
 {
     public class KanbanController : Controller
     {
+
+        [Authorize]
+        public IActionResult CreateBoard()
+        {
+            return View();
+        }
+
         [Authorize][HttpPost]
-        public async Task<IActionResult> CreateBoard(string name)
+        public async Task<IActionResult> CreateBoard(string name, List<string> columnName)
         {
             ModelFactory modelFactory = new ModelFactory();
             KanbanBoardRepository kanbanBoardRepository = new KanbanBoardRepository();
 
             int currentUserId = int.Parse(HttpContext.User.FindFirstValue(Authenticate.UserIdClaim));
-            KanbanBoard board = modelFactory.CreateKanbanBoard(name, currentUserId, DateTime.UtcNow);
 
+            KanbanBoard board = modelFactory.CreateKanbanBoard(name, currentUserId, DateTime.UtcNow, columnName.Count, columnName);
             await kanbanBoardRepository.SaveKanbanBoard(board);
 
             return RedirectToAction("Index", "Home");
@@ -48,20 +55,32 @@ namespace T_FORCE.Controllers
         }
 
         [Authorize]
-        public IActionResult MyBoards()
+        public IActionResult Boards()
         {
             KanbanBoardRepository kanbanBoardRepository = new KanbanBoardRepository();
-            int currentUserId = int.Parse(HttpContext.User.FindFirstValue(Authenticate.UserIdClaim));
 
-            List<KanbanBoard> kanbanBoards = kanbanBoardRepository.GetKanbanBoardsCreatedBy(currentUserId);
+            return View(kanbanBoardRepository.GetAll());
+        }
 
-            return View("Board",kanbanBoards.First());
+        [Authorize]
+        public IActionResult Board(string id)
+        {
+            KanbanBoardRepository kanbanBoardRepository = new KanbanBoardRepository();
+
+            return View(kanbanBoardRepository.GetKanbanBoardById(id));
         }
 
         [Authorize][HttpPost]
-        public IActionResult AddTask(int taskId, int boardId, string columnSelector)
+        public async Task<IActionResult> AddTask(int taskId, int boardId, string columnDesc)
         {
-            return null;
+            KanbanBoardRepository kanbanBoardRepository = new KanbanBoardRepository();
+            KanbanBoard kanbanBoard = kanbanBoardRepository.GetKanbanBoardById(Convert.ToString(boardId));
+            int columnNumber = kanbanBoard.GetColumnNumber(columnDesc);
+
+            kanbanBoard.AddSwim(columnNumber, taskId);
+            await kanbanBoardRepository.UpdateKanbanBoard(kanbanBoard);
+
+            return View("Board", kanbanBoard);
         }
     }
 }

@@ -19,16 +19,19 @@ namespace T_FORCE.Controllers
         }
 
         [Authorize][HttpPost]
-        public async Task<IActionResult> CreateTask(string name, string description, string taskTypes, string expectedEndDate)
+        public async Task<IActionResult> CreateTask(string name, string description, string projectName, string taskTypes, string expectedEndDate)
         {
             ModelFactory modelFactory = new ModelFactory();
             TaskRepository taskRepository = new TaskRepository();
+            ProjectRepository projectRepository = new ProjectRepository();
 
             int currentUserId = int.Parse(HttpContext.User.FindFirstValue(Authenticate.UserIdClaim));
             DateTime endDate = DateTime.Parse(expectedEndDate);
             TaskType taskTypeEnum = (TaskType)Enum.Parse(typeof(TaskType), taskTypes);
 
-            Models.Task task = modelFactory.CreateTask(name, description, taskTypeEnum, currentUserId, DateTime.Now.ToUniversalTime(), endDate, null);
+            string projectCode = projectRepository.GetProjectByName(projectName).Code;
+
+            Models.Task task = modelFactory.CreateTask(name, description, taskTypeEnum, currentUserId, DateTime.Now.ToUniversalTime(), endDate, projectCode,  null);
             await taskRepository.SaveTask(task);
 
             return RedirectToAction("Index", "Home");
