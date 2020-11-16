@@ -105,5 +105,14 @@ namespace T_FORCE.Repositories
                 return null;
             }
         }
+
+        /// <summary>
+        /// Gets the task object by project code ID (ProjectCode+TaskID (example ABC123)).
+        /// </summary>
+        public Task GetTaskByProjectCodeId(string projectCodeId)
+        {
+            Task task = appDbContext.Tasks.Where(task => task.ProjectCode+task.Id == projectCodeId).FirstOrDefault();
+            return task;
+        }
     }
 }

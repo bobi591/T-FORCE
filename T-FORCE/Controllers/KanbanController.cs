@@ -11,6 +11,7 @@ using T_FORCE.Models;
 using T_FORCE.Processes;
 using T_FORCE.Repositories;
 using T_FORCE.UserInterfaceUtils;
+using Task = T_FORCE.Models.Task;
 
 namespace T_FORCE.Controllers
 {
@@ -71,14 +72,20 @@ namespace T_FORCE.Controllers
         }
 
         [Authorize][HttpPost]
-        public async Task<IActionResult> AddTask(int taskId, int boardId, string columnDesc)
+        public async Task<IActionResult> AddTask(string taskProjectCodeId, int boardId, string columnDesc)
         {
             KanbanBoardRepository kanbanBoardRepository = new KanbanBoardRepository();
+            TaskRepository taskRepository = new TaskRepository();
+
             KanbanBoard kanbanBoard = kanbanBoardRepository.GetKanbanBoardById(Convert.ToString(boardId));
             int columnNumber = kanbanBoard.GetColumnNumber(columnDesc);
+            Task task = taskRepository.GetTaskByProjectCodeId(taskProjectCodeId);
 
-            kanbanBoard.AddSwim(columnNumber, taskId);
-            await kanbanBoardRepository.UpdateKanbanBoard(kanbanBoard);
+            if (task != null)
+            {
+                kanbanBoard.AddSwim(columnNumber, task.Id);
+                await kanbanBoardRepository.UpdateKanbanBoard(kanbanBoard);
+            }
 
             return View("Board", kanbanBoard);
         }
