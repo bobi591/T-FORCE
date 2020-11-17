@@ -19,19 +19,20 @@ namespace T_FORCE.Models
             (UserOrganization userOrganization, string username, string password, string email, 
             string firstName, string lastName)
         {
-            User user = new User();
+            User user = new User
+            {
+                UserOrganization = userOrganization,
 
-            user.UserOrganization = userOrganization;
+                Username = username,
+                Password = Utilities.Encrypt(password),
+                Email = email,
+                FirstName = firstName,
+                LastName = lastName,
 
-            user.Username = username;
-            user.Password = Utilities.Encrypt(password);
-            user.Email = email;
-            user.FirstName = firstName;
-            user.LastName = lastName;
-
-            user.LastLoginAttempt = DateTime.UtcNow;
-            user.LoginAttempts = 0;
-            user.IsBlocked = false;
+                LastLoginAttempt = DateTime.UtcNow,
+                LoginAttempts = 0,
+                IsBlocked = false
+            };
 
             return user;
         }
@@ -42,16 +43,17 @@ namespace T_FORCE.Models
         public Task CreateTask(string name, string description, TaskType type, int createdByUserId,
             DateTime dateCreated, DateTime expectedEndDate, string projectCode,  int? parentTaskId)
         {
-            Task task = new Task();
-
-            task.Name = name;
-            task.Description = description;
-            task.Type = type;
-            task.CreatedBy = createdByUserId;
-            task.DateCreated = dateCreated;
-            task.ExpectedEndDate = expectedEndDate;
-            task.ProjectCode = projectCode;
-            task.TaskStatus = TaskStatus.Created;
+            Task task = new Task
+            {
+                Name = name,
+                Description = description,
+                Type = type,
+                CreatedBy = createdByUserId,
+                DateCreated = dateCreated,
+                ExpectedEndDate = expectedEndDate,
+                ProjectCode = projectCode,
+                TaskStatus = TaskStatus.Created
+            };
 
             if (parentTaskId.HasValue)
             {
@@ -67,14 +69,15 @@ namespace T_FORCE.Models
         public Task CreateTask(string name, string description, TaskType type, User createdBy,
             DateTime dateCreated, DateTime expectedEndDate, int? parentTaskId)
         {
-            Task task = new Task();
-
-            task.Name = name;
-            task.Description = description;
-            task.Type = type;
-            task.CreatedBy = createdBy.Id;
-            task.DateCreated = dateCreated;
-            task.ExpectedEndDate = expectedEndDate;
+            Task task = new Task
+            {
+                Name = name,
+                Description = description,
+                Type = type,
+                CreatedBy = createdBy.Id,
+                DateCreated = dateCreated,
+                ExpectedEndDate = expectedEndDate
+            };
 
             if (parentTaskId.HasValue)
             {
@@ -90,30 +93,33 @@ namespace T_FORCE.Models
         public KanbanBoard CreateKanbanBoard(string name, int createdByUserId, DateTime dateCreated, int numberOfColumns, List<string> columnNames)
         {
 
-            KanbanBoard kanbanBoard = new KanbanBoard();
-
-            kanbanBoard.Name = name;
-            kanbanBoard.NumberOfColumns = numberOfColumns;
-            kanbanBoard.Columns = JsonConvert.SerializeObject(columnNames);
-            kanbanBoard.Swims = "";
-            kanbanBoard.CreatedBy = createdByUserId;
-            kanbanBoard.DateCreated = dateCreated;
+            KanbanBoard kanbanBoard = new KanbanBoard
+            {
+                Name = name,
+                NumberOfColumns = numberOfColumns,
+                Columns = JsonConvert.SerializeObject(columnNames),
+                Swims = "",
+                CreatedBy = createdByUserId,
+                DateCreated = dateCreated
+            };
 
             return kanbanBoard;
         }
 
+        [Obsolete("This method is obsolete and made for experimental purposes only.", false)]
         /// <summary>
         /// Creates typical (Investigation, In Progress, Done) Kanban Board object with mandatory attributes.
         /// </summary>
         public KanbanBoard CreateTypicalKanbanBoard(string name, int createdByUserId, DateTime dateCreated)
         {
 
-            KanbanBoard kanbanBoard = new KanbanBoard();
-
-            kanbanBoard.Name = name;
-            kanbanBoard.Swims = "";
-            kanbanBoard.CreatedBy = createdByUserId;
-            kanbanBoard.DateCreated = dateCreated;
+            KanbanBoard kanbanBoard = new KanbanBoard
+            {
+                Name = name,
+                Swims = "",
+                CreatedBy = createdByUserId,
+                DateCreated = dateCreated
+            };
 
             List<string> typicalColumns = new List<string>() { "Investigation", "In Progress", "Done" };
             kanbanBoard.SetColumns(typicalColumns);
@@ -126,15 +132,33 @@ namespace T_FORCE.Models
         /// </summary>
         public Project CreateProject(string name, string code, int createdByUserId, DateTime dateCreated)
         {
-            Project project = new Project();
-
-            project.Name = name;
-            project.Code = code;
-            project.CreatedBy = createdByUserId;
-            project.DateCreated = dateCreated;
-            project.KanbanBoards = "";
+            Project project = new Project
+            {
+                Name = name,
+                Code = code,
+                CreatedBy = createdByUserId,
+                DateCreated = dateCreated,
+                KanbanBoards = ""
+            };
 
             return project;
+        }
+
+        /// <summary>
+        /// Creates Comment object with mandatory attributes.
+        /// </summary>
+        public Comment CreateComment(string taskId, string userId, DateTime timeCreated, DateTime lastModified, string content)
+        {
+            Comment comment = new Comment
+            {
+                TaskId = Int32.Parse(taskId),
+                UserId = Int32.Parse(userId),
+                TimeCreated = timeCreated,
+                LastModified = lastModified,
+                Content = content
+            };
+
+            return comment;
         }
     }
 }

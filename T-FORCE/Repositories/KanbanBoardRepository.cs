@@ -7,8 +7,8 @@ namespace T_FORCE.Repositories
 {
     public class KanbanBoardRepository
     {
-        private static IAppDbContextFactory IAppDbContextFactory = new AppDbContextFactory();
-        private AppDbContext appDbContext = IAppDbContextFactory.CreateAppDbContext();
+        private static readonly IAppDbContextFactory IAppDbContextFactory = new AppDbContextFactory();
+        private readonly AppDbContext appDbContext = IAppDbContextFactory.CreateAppDbContext();
 
         /// <summary>
         /// Retrieves the kanban board by Id.

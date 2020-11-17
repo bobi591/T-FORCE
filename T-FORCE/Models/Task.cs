@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using T_FORCE.Repositories;
@@ -32,7 +33,9 @@ namespace T_FORCE.Models
         public int ChildrenTasksId { get; set; }
 
 
-
+        /// <summary>
+        /// Gets the user First + Last name. (ex. John Andersson)
+        /// </summary>
         public string GetAssigneeFirstLastName()
         {
             if (AssignedTo != 0)
@@ -45,6 +48,15 @@ namespace T_FORCE.Models
             {
                 return "Unassigned";
             }
+        }
+
+        /// <summary>
+        /// Gets the comments for the current task.
+        /// </summary>
+        public List<Comment> GetComments()
+        {
+            CommentRepository commentRepository = new CommentRepository();
+            return commentRepository.GetCommentsForTask(Convert.ToString(this.Id));
         }
 
     }

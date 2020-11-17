@@ -13,8 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
-    <Folder Include="Views\Tasks\" />
     <Folder Include="Views\Kanban\" />
   </ItemGroup>
   <ItemGroup>

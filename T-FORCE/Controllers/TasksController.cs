@@ -106,5 +106,20 @@ namespace T_FORCE.Controllers
             return Json(taskStatuses);
         }
 
+        [Authorize][HttpPost]
+        public async Task<IActionResult> Comment(string taskId, string comment)
+        {
+            ModelFactory modelFactory = new ModelFactory();
+            CommentRepository commentRepository = new CommentRepository();
+
+            string userId = HttpContext.User.FindFirstValue(Authenticate.UserIdClaim);
+
+            Comment commentObj = modelFactory.CreateComment(taskId, userId,DateTime.UtcNow, DateTime.UtcNow,comment);
+            await commentRepository.SaveComment(commentObj);
+
+            return RedirectToAction("ViewTask", new { id=taskId });
+
+        }
+
     }
 }

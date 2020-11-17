@@ -35,6 +35,7 @@ namespace T_FORCE
         public DbSet<Task> Tasks { get; set; }
         public DbSet<KanbanBoard> KanbanBoards { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<Comment> Comments { get; set; }
     }
 
     /// <summary>
@@ -47,7 +48,7 @@ namespace T_FORCE
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             optionsBuilder
-                .UseSqlServer(@"Server=192.168.0.6,1433;Database=DEVTFORCE;User Id=SA;Password=Boby1998;");
+                .UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TFORCE_DEV;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
 
             AppDbContext appDbContext = new AppDbContext(optionsBuilder.Options);
 

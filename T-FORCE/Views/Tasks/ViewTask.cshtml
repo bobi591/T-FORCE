@@ -1,8 +1,13 @@
 ﻿@model T_FORCE.Models.Task
 @using T_FORCE.Repositories;
 
-@{ ViewData["Title"] = Model.ProjectCode+Model.Id+" - "+Model.Name;
+
+@{ ViewData["Title"] = Model.ProjectCode + Model.Id + " - " + Model.Name;
     ProjectRepository projectRepository = new ProjectRepository();}
+
+<!--This script inclusion should be here only, because it enables summernote but does not glich the card expansion functionality!-->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
 
 <div id="container" style="padding: 2%">
     <div class="card shadow mb-4">
@@ -45,6 +50,7 @@
             </div>
         </div>
     </div>
+    @await Html.PartialAsync("_Comments")
 </div>
 
 <!-- Change status modal -->
@@ -76,6 +82,14 @@
 <!-- Task status options filler -->
 <script type="text/javascript">
     $(function () {
+
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                placeholder: 'Task description...',
+                tabsize: 1,
+                height: 100
+            });
+        });
 
         AjaxCall('/Tasks/GetTaskStatuses', null).done(function (response) {
             if (response.length > 0) {
