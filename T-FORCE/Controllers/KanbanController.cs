@@ -35,10 +35,10 @@ namespace T_FORCE.Controllers
             KanbanBoard board = modelFactory.CreateKanbanBoard(name, currentUserId, DateTime.UtcNow, columnName.Count, columnName);
             await kanbanBoardRepository.SaveKanbanBoard(board);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Boards");
         }
 
-
+        [Obsolete("This method is obsolete and made for experimental purposes only.", false)]
         [Authorize]
         public async Task<IActionResult> CreateTypicalBoard()
         {

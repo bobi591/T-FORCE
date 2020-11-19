@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace T_FORCE.Models
@@ -68,10 +69,25 @@ namespace T_FORCE.Models
         public void AddSwim(int columnNumber, int taskId)
         {
             Dictionary<int, List<int>> swimValue = GetSwim();
+
+            //Check if the added task is already existing in another column and cleanup duplicates.
+            foreach(int key in swimValue.Keys.ToList())
+            {
+                foreach(int listValue in swimValue[key].ToList())
+                {
+                    if (listValue == taskId)
+                    {
+                        swimValue[key].Remove(listValue);
+                    }
+                }
+            }
+
+            //Check if the column is declared in the empty Dictionary when adding a first record in the column.
             if (!swimValue.ContainsKey(columnNumber))
             {
                 swimValue.Add(columnNumber, new List<int>());
             }
+
             swimValue[columnNumber].Add(taskId);
             this.Swims = JsonConvert.SerializeObject(swimValue);
         }
