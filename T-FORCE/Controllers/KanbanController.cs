@@ -87,7 +87,7 @@ namespace T_FORCE.Controllers
                 await kanbanBoardRepository.UpdateKanbanBoard(kanbanBoard);
             }
 
-            return View("Board", kanbanBoard);
+            return RedirectToAction("Board", new { id = kanbanBoard.Id });
         }
     }
 }

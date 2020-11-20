@@ -1,31 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Boby Waffles\\Desktop\\T-FORCE\\T-FORCE\\T-FORCE.csproj": {}
+    "/Users/bobywaffles/Desktop/T-FORCE/T-FORCE/T-FORCE.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Boby Waffles\\Desktop\\T-FORCE\\T-FORCE\\T-FORCE.csproj": {
+    "/Users/bobywaffles/Desktop/T-FORCE/T-FORCE/T-FORCE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Boby Waffles\\Desktop\\T-FORCE\\T-FORCE\\T-FORCE.csproj",
+        "projectUniqueName": "/Users/bobywaffles/Desktop/T-FORCE/T-FORCE/T-FORCE.csproj",
         "projectName": "T-FORCE",
-        "projectPath": "C:\\Users\\Boby Waffles\\Desktop\\T-FORCE\\T-FORCE\\T-FORCE.csproj",
-        "packagesPath": "C:\\Users\\Boby Waffles\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Boby Waffles\\Desktop\\T-FORCE\\T-FORCE\\obj\\",
+        "projectPath": "/Users/bobywaffles/Desktop/T-FORCE/T-FORCE/T-FORCE.csproj",
+        "packagesPath": "/Users/bobywaffles/.nuget/packages/",
+        "outputPath": "/Users/bobywaffles/Desktop/T-FORCE/T-FORCE/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Boby Waffles\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/bobywaffles/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -37,6 +36,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
               "target": "Package",
@@ -69,7 +69,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.100/RuntimeIdentifierGraph.json"
         }
       }
     }

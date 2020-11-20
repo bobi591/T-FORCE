@@ -1,0 +1,32 @@
+﻿<Properties StartupConfiguration="{B84F3B18-B27A-45CC-A5DF-62B8BFF8B1EF}|Default">
+  <MonoDevelop.Ide.ItemProperties.T-FORCE PreferredExecutionTarget="/Applications/Firefox.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="T-FORCE/Controllers/KanbanController.cs">
+    <Files>
+      <File FileName="T-FORCE/AppDbContext.cs" Line="51" Column="51" />
+      <File FileName="T-FORCE/Views/Kanban/Board.cshtml" Line="1" Column="1" />
+      <File FileName="T-FORCE/Controllers/KanbanController.cs" Line="81" Column="44" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="T-FORCE" expanded="True">
+            <Node name="T-FORCE" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="KanbanController.cs" selected="True" />
+              </Node>
+              <Node name="Views" expanded="True">
+                <Node name="Kanban" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

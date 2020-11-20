@@ -48,7 +48,7 @@ namespace T_FORCE
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             optionsBuilder
-                .UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=TFORCE_DEV;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                .UseSqlServer(@"Server=192.168.0.6,1433;Database=DEVTFORCE;User Id=SA;Password=Boby1998;");
 
             AppDbContext appDbContext = new AppDbContext(optionsBuilder.Options);
 
