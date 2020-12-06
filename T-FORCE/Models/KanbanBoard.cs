@@ -23,6 +23,8 @@ namespace T_FORCE.Models
         public int CreatedBy { get; set; }
         [Required]
         public DateTime DateCreated { get; set; }
+        [Required]
+        public string Project { get; set; }
 
         //The property here is used for data transfer between Kaban Controller and the CreateBoard view.
         [NotMapped]

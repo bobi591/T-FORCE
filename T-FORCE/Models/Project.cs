@@ -18,38 +18,5 @@ namespace T_FORCE.Models
         public int CreatedBy { get; set; }
         [Required]
         public DateTime DateCreated { get; set; }
-        public string KanbanBoards { get; set; }
-
-        /// <summary>
-        /// Gets a list of Kanban board Ids assigned to the project.
-        /// </summary>
-        public List<int> GetAssignedKanbanBoardsIds()
-        {
-            if (this.KanbanBoards != null)
-            {
-                return JsonConvert.DeserializeObject<List<int>>(this.KanbanBoards);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Adds a Kanban board to project.
-        /// </summary>
-        public void AddKanbanBoard(int kanbanBoardId)
-        {
-            if (KanbanBoards != null)
-            {
-                List<int> kanbanBoards = GetAssignedKanbanBoardsIds();
-                kanbanBoards.Add(kanbanBoardId);
-            }
-            else
-            {
-                List<int> kanbanBoards = new List<int>();
-                KanbanBoards = JsonConvert.SerializeObject(kanbanBoards);
-            }
-        }
     }
 }

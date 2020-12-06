@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using T_FORCE.Processes;
+using T_FORCE.Repositories;
 
 namespace T_FORCE.Models
 {
@@ -90,7 +91,7 @@ namespace T_FORCE.Models
         /// <summary>
         /// Creates Kanban Board object with mandatory attributes.
         /// </summary>
-        public KanbanBoard CreateKanbanBoard(string name, int createdByUserId, DateTime dateCreated, int numberOfColumns, List<string> columnNames)
+        public KanbanBoard CreateKanbanBoard(string name, int createdByUserId, DateTime dateCreated, int numberOfColumns, List<string> columnNames, string projectName)
         {
 
             KanbanBoard kanbanBoard = new KanbanBoard
@@ -100,9 +101,9 @@ namespace T_FORCE.Models
                 Columns = JsonConvert.SerializeObject(columnNames),
                 Swims = "",
                 CreatedBy = createdByUserId,
-                DateCreated = dateCreated
+                DateCreated = dateCreated,
+                Project = projectName
             };
-
             return kanbanBoard;
         }
 
@@ -137,8 +138,7 @@ namespace T_FORCE.Models
                 Name = name,
                 Code = code,
                 CreatedBy = createdByUserId,
-                DateCreated = dateCreated,
-                KanbanBoards = ""
+                DateCreated = dateCreated
             };
 
             return project;

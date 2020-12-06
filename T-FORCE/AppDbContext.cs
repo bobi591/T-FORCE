@@ -48,7 +48,7 @@ namespace T_FORCE
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             optionsBuilder
-                .UseSqlServer(@"Server=192.168.0.6,1433;Database=DEVTFORCE;User Id=SA;Password=Boby1998;");
+                .UseSqlServer(@"Server=192.168.0.105,1433;Database=DEVTFORCE;User Id=SA;Password=Boby1998;");
 
             AppDbContext appDbContext = new AppDbContext(optionsBuilder.Options);
 

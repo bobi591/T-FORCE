@@ -25,14 +25,14 @@ namespace T_FORCE.Controllers
         }
 
         [Authorize][HttpPost]
-        public async Task<IActionResult> CreateBoard(string name, List<string> columnName)
+        public async Task<IActionResult> CreateBoard(string name, string projectName, List<string> columnName)
         {
             ModelFactory modelFactory = new ModelFactory();
             KanbanBoardRepository kanbanBoardRepository = new KanbanBoardRepository();
 
             int currentUserId = int.Parse(HttpContext.User.FindFirstValue(Authenticate.UserIdClaim));
 
-            KanbanBoard board = modelFactory.CreateKanbanBoard(name, currentUserId, DateTime.UtcNow, columnName.Count, columnName);
+            KanbanBoard board = modelFactory.CreateKanbanBoard(name, currentUserId, DateTime.UtcNow, columnName.Count, columnName, projectName);
             await kanbanBoardRepository.SaveKanbanBoard(board);
 
             return RedirectToAction("Boards");

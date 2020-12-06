@@ -18,6 +18,16 @@
                     <label for="bname"><b>Board name</b></label>
                     <input id="name" type="text" class="form-control" placeholder="Enter board name" name="name" required>
 
+                    <label for="projectSelector"><b>Project</b></label>
+                    <select id="projectName" name="projectName" class="form-control" required>
+                        @{
+                            ProjectRepository projectRepository = new ProjectRepository();
+                            foreach (Project project in projectRepository.GetAllProjects())
+                            {
+                                <option value="@project.Name">@project.Name</option>
+                            }
+                        }
+                    </select>
                     <label for="bColumnName"><b>Column name</b></label>
                     <input type="text" class="form-control" placeholder="Enter column name" name="columnName" required>
                 </div>
