@@ -44,6 +44,9 @@ namespace T_FORCE.Models
         public Task CreateTask(string name, string description, TaskType type, int createdByUserId,
             DateTime dateCreated, DateTime expectedEndDate, string projectCode,  int? parentTaskId)
         {
+            ProjectRepository projectRepository = new ProjectRepository();
+            Project project = projectRepository.GetProjectByCode(projectCode);
+
             Task task = new Task
             {
                 Name = name,
@@ -53,7 +56,7 @@ namespace T_FORCE.Models
                 DateCreated = dateCreated,
                 ExpectedEndDate = expectedEndDate,
                 ProjectCode = projectCode,
-                TaskStatus = TaskStatus.Created
+                TaskStatus = project.GetTaskStatuses()[0]
             };
 
             if (parentTaskId.HasValue)
@@ -131,14 +134,16 @@ namespace T_FORCE.Models
         /// <summary>
         /// Creates Project object with mandatory attributes.
         /// </summary>
-        public Project CreateProject(string name, string code, int createdByUserId, DateTime dateCreated)
+        public Project CreateProject(string name, string code, int createdByUserId, DateTime dateCreated, List<string> taskStatus)
         {
             Project project = new Project
             {
                 Name = name,
                 Code = code,
                 CreatedBy = createdByUserId,
-                DateCreated = dateCreated
+                DateCreated = dateCreated,
+                //TODO: Improve logic JSON conversion in ModelFactory
+                TaskStatuses = JsonConvert.SerializeObject(taskStatus) // Task statuses should be always JSON format!
             };
 
             return project;

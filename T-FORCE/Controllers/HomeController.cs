@@ -44,14 +44,14 @@ namespace T_FORCE.Controllers
             return View();
         }
 
-        public async Task<IActionResult> CreateProject(string projectName, string projectCode)
+        public async Task<IActionResult> CreateProject(string projectName, string projectCode, List<string> taskStatus)
         {
             ModelFactory modelFactory = new ModelFactory();
             ProjectRepository projectRepository = new ProjectRepository();
 
             int currentUserId = int.Parse(HttpContext.User.FindFirstValue(Authenticate.UserIdClaim));
 
-            Project project = modelFactory.CreateProject(projectName, projectCode, currentUserId, DateTime.Now.ToUniversalTime());
+            Project project = modelFactory.CreateProject(projectName, projectCode, currentUserId, DateTime.Now.ToUniversalTime(), taskStatus);
 
             ViewBag.Message = await projectRepository.SaveProject(project);
 

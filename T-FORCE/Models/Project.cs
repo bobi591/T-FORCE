@@ -18,5 +18,17 @@ namespace T_FORCE.Models
         public int CreatedBy { get; set; }
         [Required]
         public DateTime DateCreated { get; set; }
+        [Required]
+        public string TaskStatuses { get; set; }
+
+
+        public void SetTaskStatuses(List<string> statuses)
+        {
+            this.TaskStatuses = JsonConvert.SerializeObject(statuses);
+        }
+        public List<string> GetTaskStatuses()
+        {
+            return JsonConvert.DeserializeObject<List<string>>(this.TaskStatuses);
+        }
     }
 }

@@ -97,10 +97,10 @@
                 var options = '';
                 for (var i = 1; i < response.length; i++) {
                     if (response[i] === '@Model.TaskStatus') {
-                        options += '<option selected name="taskStatus" value="' + i + '" text="' + response[i] + '">' + response[i] + '</option>';
+                        options += '<option selected name="taskStatus" value="' + response[i] + '" text="' + response[i] + '">' + response[i] + '</option>';
                     }
                     else {
-                        options += '<option name="taskStatus" value="' + i + '" text="' + response[i] + '">' + response[i] + '</option>';
+                        options += '<option name="taskStatus" value="' + response[i] + '" text="' + response[i] + '">' + response[i] + '</option>';
                     }
                 }
                 $('#taskStatuses').append(options);
@@ -114,7 +114,8 @@
             return $.ajax({
                 url: url,
                 type: type ? type : 'GET',
-                data: data,
+                //TODO: Fix hardcoded values!! Make the data passed from the function call!
+                data: {projectCode: "@Model.ProjectCode"}, //Hardcoded value!
                 contentType: 'application/json'
             });
         }

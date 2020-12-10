@@ -23,7 +23,7 @@ namespace T_FORCE.Models
         [Required]
         public DateTime ExpectedEndDate { get; set; }
         [Required]
-        public TaskStatus TaskStatus { get; set; }
+        public string TaskStatus { get; set; }
         [Required]
         public string ProjectCode { get; set; }
 
@@ -65,13 +65,5 @@ namespace T_FORCE.Models
         Task,
         Issue,
         Epic
-    }
-    public enum TaskStatus
-    {
-        Created,
-        Investigation,
-        Ongoing,
-        Finished,
-        Archived
     }
 }

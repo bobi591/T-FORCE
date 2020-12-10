@@ -73,32 +73,38 @@ namespace T_FORCE.Controllers
             TaskRepository taskRepository = new TaskRepository();
 
             Models.Task task = taskRepository.GetTaskById(taskId);
-            Models.TaskStatus taskStatusEnum = (Models.TaskStatus)Enum.Parse(typeof(Models.TaskStatus), taskStatuses);
 
-            task.TaskStatus = taskStatusEnum;
+            task.TaskStatus = taskStatuses;
             await taskRepository.UpdateTask(task);
 
             return View("ViewTask", task);
         }
 
         [Authorize]
-        public JsonResult GetTaskTypes()
+        public JsonResult GetTaskTypes(string projectName)
         {
-            List<String> taskTypes = new List<string>();
+            ProjectRepository projectRepository = new ProjectRepository();
+            Project project = projectRepository.GetProjectByName(projectName);
 
-            foreach (TaskType type in (TaskType[])Enum.GetValues(typeof(TaskType)))
+            List<String> taskStatuses = new List<string>();
+
+            foreach (string status in project.GetTaskStatuses())
             {
-                taskTypes.Add(type.ToString());
+                taskStatuses.Add(status.ToString());
             }
-            return Json(taskTypes);
+
+            return Json(taskStatuses);
         }
 
         [Authorize]
-        public JsonResult GetTaskStatuses()
+        public JsonResult GetTaskStatuses(string projectCode)
         {
+            ProjectRepository projectRepository = new ProjectRepository();
+            Project project = projectRepository.GetProjectByCode(projectCode);
+
             List<String> taskStatuses = new List<string>();
 
-            foreach (Models.TaskStatus status in (Models.TaskStatus[])Enum.GetValues(typeof(Models.TaskStatus)))
+            foreach (string status in project.GetTaskStatuses())
             {
                 taskStatuses.Add(status.ToString());
             }

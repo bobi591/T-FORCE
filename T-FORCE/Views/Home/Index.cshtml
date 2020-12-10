@@ -16,37 +16,37 @@
                 ProjectRepository projectRepository = new ProjectRepository();
                 foreach (T_FORCE.Models.Task task in Model[PredefinedViewBag.CreatedTasks])
                 { <!--Created by me Task card-->
-                                    <div class="card shadow mb-4">
-                                        <!-- Card Header - Accordion -->
-                                        <a href="#collapseCardCreatedTask-@task.Id" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardCreatedTask-@task.Id">
-                                            <h6 class="m-0 font-weight-bold text-primary">@task.ProjectCode@task.Id - @task.Name</h6>
-                                        </a>
-                                        <!-- Card Content - Collapse -->
-                                        <div class="collapse" id="collapseCardCreatedTask-@task.Id" style="">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-10">
-                                                        <label for="tdescription"><b>Description</b></label>
-                                                        <div>@Html.Raw(@task.Description)</div>
-                                                        <label for="tassignee"><b>Assignee</b></label>
-                                                        <p>@task.GetAssigneeFirstLastName()</p>
-                                                        <label for="tstatus"><b>Status</b></label>
-                                                        <p>@task.TaskStatus</p>
-                                                        <label for="tProject"><b>Project</b></label>
-                                                        <p>@projectRepository.GetProjectByCode(task.ProjectCode).Name</p>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="row">
-                                                            <button onclick="window.location.href='/Tasks/ViewTask?id=@task.Id'" type="button" class="btn btn-outline-primary" style="margin: 2%;">Open</button>
-                                                        </div>
-                                                        <div class="row">
-                                                            <button href="/Tasks/Archive?id=@task.Id" ype="button" class="btn btn-outline-warning" style="margin: 2%;">Archive</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Accordion -->
+                        <a href="#collapseCardCreatedTask-@task.Id" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardCreatedTask-@task.Id">
+                            <h6 class="m-0 font-weight-bold text-primary">@task.ProjectCode@task.Id - @task.Name</h6>
+                        </a>
+                        <!-- Card Content - Collapse -->
+                        <div class="collapse" id="collapseCardCreatedTask-@task.Id" style="">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <label for="tdescription"><b>Description</b></label>
+                                        <div>@Html.Raw(@task.Description)</div>
+                                        <label for="tassignee"><b>Assignee</b></label>
+                                        <p>@task.GetAssigneeFirstLastName()</p>
+                                        <label for="tstatus"><b>Status</b></label>
+                                        <p>@task.TaskStatus</p>
+                                        <label for="tProject"><b>Project</b></label>
+                                        <p>@projectRepository.GetProjectByCode(task.ProjectCode).Name</p>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            <button onclick="window.location.href='/Tasks/ViewTask?id=@task.Id'" type="button" class="btn btn-outline-primary" style="margin: 2%;">Open</button>
                                         </div>
-                                    </div> } }
+                                        <div class="row">
+                                            <button href="/Tasks/Archive?id=@task.Id" ype="button" class="btn btn-outline-warning" style="margin: 2%;">Archive</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> } }
         </div>
         <div class="col-5">
             <h1 class="h3 mb-1 text-gray-800">Assigned Tasks</h1>
@@ -55,34 +55,34 @@
             @{
                 foreach (T_FORCE.Models.Task task in Model[PredefinedViewBag.AssignedTasks])
                 { <!--Assigned Task card-->
-                                    <div class="card shadow mb-4">
-                                        <!-- Card Header - Accordion -->
-                                        <a href="#collapseCardAssignedTask-@task.Id" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardAssignedTask-@task.Id">
-                                            <h6 class="m-0 font-weight-bold text-primary">@task.ProjectCode@task.Id - @task.Name</h6>
-                                        </a>
-                                        <!-- Card Content - Collapse -->
-                                        <div class="collapse" id="collapseCardAssignedTask-@task.Id" style="">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="col-10">
-                                                        <label for="tdescription"><b>Description</b></label>
-                                                        <div>@Html.Raw(@task.Description)</div>
-                                                        <label for="tassignee"><b>Assignee</b></label>
-                                                        <p>@task.GetAssigneeFirstLastName()</p>
-                                                        <label for="tstatus"><b>Status</b></label>
-                                                        <p>@task.TaskStatus</p>
-                                                        <label for="tProject"><b>Project</b></label>
-                                                        <p>@projectRepository.GetProjectByCode(task.ProjectCode).Name</p>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="row">
-                                                            <button onclick="window.location.href='/Tasks/ViewTask?id=@task.Id'" type="button" class="btn btn-outline-primary" style="margin: 2%;">Open</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Accordion -->
+                        <a href="#collapseCardAssignedTask-@task.Id" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardAssignedTask-@task.Id">
+                            <h6 class="m-0 font-weight-bold text-primary">@task.ProjectCode@task.Id - @task.Name</h6>
+                        </a>
+                        <!-- Card Content - Collapse -->
+                        <div class="collapse" id="collapseCardAssignedTask-@task.Id" style="">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-10">
+                                        <label for="tdescription"><b>Description</b></label>
+                                        <div>@Html.Raw(@task.Description)</div>
+                                        <label for="tassignee"><b>Assignee</b></label>
+                                        <p>@task.GetAssigneeFirstLastName()</p>
+                                        <label for="tstatus"><b>Status</b></label>
+                                        <p>@task.TaskStatus</p>
+                                        <label for="tProject"><b>Project</b></label>
+                                        <p>@projectRepository.GetProjectByCode(task.ProjectCode).Name</p>
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            <button onclick="window.location.href='/Tasks/ViewTask?id=@task.Id'" type="button" class="btn btn-outline-primary" style="margin: 2%;">Open</button>
                                         </div>
-                                    </div> } }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> } }
         </div>
         <div class="col" style="margin-top: 6%; padding-left: 3%">
             <div class="row">
@@ -112,7 +112,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" action="@Url.Action("CreateProject","Home")">
+            <form method="post" action="@Url.Action("CreateProject","Home")" id="projectProperties">
 
                 <label for="pName">Project name</label>
                 <input type="text" class="form-control form-control-user"
@@ -122,10 +122,15 @@
                 <input type="text" class="form-control form-control-user"
                        id="projectCode" name="projectCode" placeholder="Project code..." required>
 
+                <label for="pTaskStatus">Task status</label>
+                <input type="text" class="form-control form-control-user"
+                       id="taskStatus" name="taskStatus" placeholder="Task status..." required>
 
-                <div class="modal-footer">
+
+                <div class="modal-footer" id="modalFooter">
+                    <input class="btn btn-primary" onclick="GenerateTaskStatusInput()" type="button" value="Add Task status" />
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Save Changes">
+                    <input type="submit" class="btn btn-success" value="Save Changes">
                 </div>
             </form>
         </div>
@@ -133,5 +138,25 @@
 </div>
 
 
+<!-- Dynamic options menu for task status in Project creation -->
+<script type="text/javascript">
+    function GenerateTaskStatusInput() {
+        var input = document.createElement("input");
+        input.setAttribute('type', 'text');
+        input.setAttribute('class', 'form-control form-control-user');
+        input.setAttribute('placeholder', 'Task status...');
+        input.setAttribute('name', 'taskStatus');
+        input.setAttribute('required', '');
+
+        var label = document.createElement("label");
+        label.setAttribute('for', 'pTaskStatus');
+        label.innerHTML = "Task status";
+
+        var parent = document.getElementById("projectProperties");
+
+        parent.insertBefore(label, parent.lastElementChild);
+        parent.insertBefore(input, parent.lastElementChild);
+    }
+</script>
 
 @ViewBag.Message

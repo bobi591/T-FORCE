@@ -21,6 +21,19 @@
                 <label for="tdescription"><b>Task content</b></label>
                 <textarea id="summernote" name="description"></textarea>
 
+                <label for="projectSelector"><b>Project</b></label>
+                <select id="projectName" name="projectName" class="form-control" 
+                        onchange="FetchSelectedProjectStatuses()" required>
+                    @{
+                        ProjectRepository projectRepository = new ProjectRepository();
+                        foreach (Project project in projectRepository.GetAllProjects())
+                        {
+                            <option value="@project.Name">@project.Name</option>
+                        }
+                    }
+
+                </select>
+
                 <label for="ttype"><b>Select task type</b></label>
                 <select id="taskTypes" name="taskTypes" class="form-control">
                     <option value="Select">Task type</option>
@@ -28,18 +41,6 @@
 
                 <label for="texpiration"><b>Finished until</b></label>
                 <input type="date" class="form-control" placeholder="Enter Task Finish Date" name="expectedEndDate" required>
-
-                <label for="projectSelector"><b>Project</b></label>
-                <select id="projectName" name="projectName" class="form-control" required>
-                @{
-                    ProjectRepository projectRepository = new ProjectRepository();
-                    foreach (Project project in projectRepository.GetAllProjects())
-                    {
-                        <option value="@project.Name">@project.Name</option>
-                    }
-                }
-
-                </select>
 
                 <div class="my-2"></div>
                 <input class="btn btn-primary" type="submit" value="Create" />
@@ -50,15 +51,14 @@
 </div>
 
 <!-- Task types options filler  & Summernote inclusion-->
-<script type="text/javascript">$(function () {
+<script type="text/javascript">
 
-        $(document).ready(function () {
-            $('#summernote').summernote({
-                placeholder: 'Task description...',
-                tabsize: 1,
-                height: 100
-            });
-        });
+    // This function retireves the available Task Types for the currently selected Project.
+    // The function is triggered on projectName change.
+    function FetchSelectedProjectStatuses() {
+        var projectNameSelect = document.getElementById("projectName");
+        var projectName = projectNameSelect.value;
+
         AjaxCall('/Tasks/GetTaskTypes', null).done(function (response) {
             if (response.length > 0) {
                 $('#taskTypes').html('');
@@ -77,10 +77,26 @@
             return $.ajax({
                 url: url,
                 type: type ? type : 'GET',
-                data: data,
+                data: { //TODO: Fix hardcoded values!! Make the data passed from the function call!
+                    projectName: projectName //hardcoded call!
+                },
                 contentType: 'application/json'
             });
         }
+    }
+
+    $(function () {
+
+        $(document).ready(function () {
+
+            FetchSelectedProjectStatuses() //Retrieve the available Task types for the project appearing by default
+
+            $('#summernote').summernote({
+                placeholder: 'Task description...',
+                tabsize: 1,
+                height: 100
+            });
+        });
 });
 </script>
 
