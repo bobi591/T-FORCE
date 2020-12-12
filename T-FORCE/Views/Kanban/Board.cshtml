@@ -7,10 +7,13 @@
 <div id="container" style="padding: 2%">
     <h1 class="h4 mb-1 text-gray-800" style="padding-bottom:1%;">Kanban Board - @Model.Name</h1>
 
-    <button type="button" class="btn btn-outline-success" style="margin-right:1%;margin-bottom:1%;">Add column</button>
-    <button type="button" data-toggle="modal" data-target="#addTaskModal" class="btn btn-outline-success" style="margin-right:1%;margin-bottom:1%;">Add task</button>
-    <button type="button" class="btn btn-outline-danger" style="margin-right:1%;margin-bottom:1%;">Remove column</button>
-    <button type="button" class="btn btn-outline-danger" style="margin-right:1%;margin-bottom:1%;">Remove task</button>
+    @if (Model.IsCustomBoard())
+    {
+        <button type="button" class="btn btn-outline-success" style="margin-right:1%;margin-bottom:1%;">Add column</button>
+        <button type="button" data-toggle="modal" data-target="#addTaskModal" class="btn btn-outline-success" style="margin-right:1%;margin-bottom:1%;">Add task</button>
+        <button type="button" class="btn btn-outline-danger" style="margin-right:1%;margin-bottom:1%;">Remove column</button>
+        <button type="button" class="btn btn-outline-danger" style="margin-right:1%;margin-bottom:1%;">Remove task</button>
+    }
 
     <div class="row">
         @{
@@ -68,50 +71,59 @@
 </div>
 
 
-<!-- Add task modal -->
-<div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add task to the dashboard</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="post" action="@Url.Action("AddTask","Kanban")">
-                <label for="taskId">Board ID</label>
-                <input type="text" class="form-control form-control-user"
-                       id="boardId" name="boardId" value="@Model.Id" readonly>
-                <label for="taskId">Task to add</label>
-                <input type="text" class="form-control form-control-user"
-                       id="taskProjectCodeId" name="taskProjectCodeId" placeholder="Task Project Code ID (ex. MHN223)..." required>
-                <label for="columnSelector">Column</label>
-                <select id="columnDesc" name="columnDesc" class="form-control" required>
-                    @{
-                        foreach (string column in Model.GetColumns())
-                        {
-                            <option value="@column">@column</option>
-                        }
-                    }
-
-                </select>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary" value="Save Changes">
+@if (Model.IsCustomBoard())
+{
+    <!-- Add task modal -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add task to the dashboard</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-            </form>
+                <form method="post" action="@Url.Action("TaskColumnSwitch","Kanban")">
+                    <label for="taskId">Board ID</label>
+                    <input type="text" class="form-control form-control-user"
+                           id="boardId" name="boardId" value="@Model.Id" readonly>
+                    <label for="taskId">Task to add</label>
+                    <input type="text" class="form-control form-control-user"
+                           id="taskProjectCodeId" name="taskProjectCodeId" placeholder="Task Project Code ID (ex. MHN223)..." required>
+                    <label for="columnSelector">Column</label>
+                    <select id="columnDesc" name="columnDesc" class="form-control" required>
+                        @{
+                            foreach (string column in Model.GetColumns())
+                            {
+                                <option value="@column">@column</option>
+                            }
+                        }
+
+                    </select>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" value="Save Changes">
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+}
+
+
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script>
+    //JQuery DragNDrop settings
+
     $(document).ready(function () {
+
         $(".card").draggable({
             revert: "invalid", // when not dropped, the item will revert back to its initial position});
             stack: ".card"
-        }) 
+        })
 
         $(".col").droppable({
             appendTo: "body",
@@ -124,7 +136,7 @@
 
                         $.ajax({
                             type: "POST",
-                            url: "/Kanban/AddTask",
+                            url: "/Kanban/TaskColumnSwitch",
                             data: { taskProjectCodeId: cardName, boardId: boardId, columnDesc: columnName },
                             dataType: "text",
                             success: function (msg) {

@@ -44,16 +44,30 @@ namespace T_FORCE.Controllers
             return View();
         }
 
-        public async Task<IActionResult> CreateProject(string projectName, string projectCode, List<string> taskStatus)
+        public async Task<IActionResult> CreateProject(string projectName, string projectCode, List<string> taskStatusesElements)
         {
             ModelFactory modelFactory = new ModelFactory();
             ProjectRepository projectRepository = new ProjectRepository();
 
             int currentUserId = int.Parse(HttpContext.User.FindFirstValue(Authenticate.UserIdClaim));
 
-            Project project = modelFactory.CreateProject(projectName, projectCode, currentUserId, DateTime.Now.ToUniversalTime(), taskStatus);
+            Project project = modelFactory.CreateProject(projectName, projectCode, currentUserId, DateTime.Now.ToUniversalTime(), taskStatusesElements);
 
-            ViewBag.Message = await projectRepository.SaveProject(project);
+            if (ObjectUniquenessCheck.ProjectIsUnique(project))
+            {
+                ViewBag.Message = await projectRepository.SaveProject(project);
+
+                //Create default kanbanboard for the project (This board will not be custom!)
+                KanbanBoard kanbanBoard = modelFactory.CreateKanbanBoard
+                    (projectName, currentUserId, DateTime.Now, project.GetTaskStatuses().Count, project.GetTaskStatuses(), projectName, false);
+
+                KanbanBoardRepository kanbanBoardRepository = new KanbanBoardRepository();
+                await kanbanBoardRepository.SaveKanbanBoard(kanbanBoard);
+            }
+            else
+            {
+                ViewBag.Message = "A project with same code or name already exists!";
+            }
 
             return RedirectToAction("Index", "Home");
         }

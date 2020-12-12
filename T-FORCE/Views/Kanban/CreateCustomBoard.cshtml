@@ -4,8 +4,9 @@
 
 
 <div id="container" style="padding: 2%">
-    <h1 class="h3 mb-1 text-gray-800">Create Kanban board</h1>
-    <p class="mb-4">Create new Kanban board by setting it's attributes</p>
+    <h1 class="h3 mb-1 text-gray-800">Create custom Kanban board</h1>
+    <p class="mb-4">Create new custom Kanban board by setting it's attributes</p>
+    <p class="mb-4">In custom boards the task column switch does not reflect the actual task status.</p>
 
 
     <div class="card shadow mb-4">
@@ -13,7 +14,7 @@
             <h6 class="m-0 font-weight-bold text-primary">New Kanban board attributes</h6>
         </div>
         <div class="card-body" name="card-body" id="card-body">
-            <form method="post" action="@Url.Action("CreateBoard","Kanban")">
+            <form method="post" action="@Url.Action("CreateCustomBoard","Kanban")">
                 <div id="options" name="options">
                     <label for="bname"><b>Board name</b></label>
                     <input id="name" type="text" class="form-control" placeholder="Enter board name" name="name" required>
@@ -33,7 +34,7 @@
                 </div>
                 <div class="my-2">
                     <input class="btn btn-primary" onclick="GenerateColumnNameInput()" type="button" value="Add column" />
-                    <input class="btn btn-success" onclick="PostToController()" type="submit" value="Create" />
+                    <input class="btn btn-success" type="submit" value="Create" />
                     <input class="btn btn-danger" onclick="window.location.href='/'" type="button" value="Cancel" />
                 </div>
             </form>

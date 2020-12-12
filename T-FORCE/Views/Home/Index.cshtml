@@ -99,6 +99,7 @@
             </div>
         </div>
     </div>
+    @ViewBag.Message
 </div>
 
 
@@ -122,13 +123,16 @@
                 <input type="text" class="form-control form-control-user"
                        id="projectCode" name="projectCode" placeholder="Project code..." required>
 
-                <label for="pTaskStatus">Task status</label>
-                <input type="text" class="form-control form-control-user"
-                       id="taskStatus" name="taskStatus" placeholder="Task status..." required>
+                <label for="pTaskStatuses">Task statuses</label>
+                <ul class="list-group" id="taskStatuses" name="taskStatuses">
+                </ul>
 
+                <label for="pTaskStatus">Enter new task status</label>
+                <input type="text" class="form-control form-control-user"
+                       id="taskStatus" name="taskStatus" placeholder="Task status...">
 
                 <div class="modal-footer" id="modalFooter">
-                    <input class="btn btn-primary" onclick="GenerateTaskStatusInput()" type="button" value="Add Task status" />
+                    <input class="btn btn-primary" onclick="GenerateTaskStatusInput()" type="button" value="Add Task Status" />
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <input type="submit" class="btn btn-success" value="Save Changes">
                 </div>
@@ -140,23 +144,29 @@
 
 <!-- Dynamic options menu for task status in Project creation -->
 <script type="text/javascript">
+
     function GenerateTaskStatusInput() {
-        var input = document.createElement("input");
-        input.setAttribute('type', 'text');
-        input.setAttribute('class', 'form-control form-control-user');
-        input.setAttribute('placeholder', 'Task status...');
-        input.setAttribute('name', 'taskStatus');
-        input.setAttribute('required', '');
 
-        var label = document.createElement("label");
-        label.setAttribute('for', 'pTaskStatus');
-        label.innerHTML = "Task status";
+        var taskStatusInput = document.getElementById("taskStatus");
 
-        var parent = document.getElementById("projectProperties");
+        if (taskStatusInput.value != '') {
+            var taskStatusesNewElement = document.createElement("input");
+            taskStatusesNewElement.setAttribute('name', 'taskStatusesElements');
+            taskStatusesNewElement.setAttribute('class', 'list-group-item list-group-item-action');
+            taskStatusesNewElement.setAttribute('onchange', 'TaskStatusesLiOnChange(this)');
+            taskStatusesNewElement.value = taskStatusInput.value;
 
-        parent.insertBefore(label, parent.lastElementChild);
-        parent.insertBefore(input, parent.lastElementChild);
+            document.getElementById("taskStatuses").appendChild(taskStatusesNewElement);
+
+            taskStatusInput.value = '';
+        }
+
+    }
+
+    //If the Task Statuses li user imput gets empty, remove the element!
+    function TaskStatusesLiOnChange(obj) {
+        if (obj.value === '') {
+            obj.remove();
+        }
     }
 </script>
-
-@ViewBag.Message

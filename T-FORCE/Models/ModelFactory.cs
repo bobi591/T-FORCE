@@ -94,8 +94,19 @@ namespace T_FORCE.Models
         /// <summary>
         /// Creates Kanban Board object with mandatory attributes.
         /// </summary>
-        public KanbanBoard CreateKanbanBoard(string name, int createdByUserId, DateTime dateCreated, int numberOfColumns, List<string> columnNames, string projectName)
+        public KanbanBoard CreateKanbanBoard(string name, int createdByUserId, DateTime dateCreated, 
+            int numberOfColumns, List<string> columnNames, string projectName, bool customBoard)
         {
+            int isCustom = 0;
+
+            if (customBoard)
+            {
+                isCustom = 1;
+            }
+            else
+            {
+                isCustom = 0;
+            }
 
             KanbanBoard kanbanBoard = new KanbanBoard
             {
@@ -105,7 +116,8 @@ namespace T_FORCE.Models
                 Swims = "",
                 CreatedBy = createdByUserId,
                 DateCreated = dateCreated,
-                Project = projectName
+                Project = projectName,
+                CustomBoard = isCustom
             };
             return kanbanBoard;
         }

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Newtonsoft.Json;
+using T_FORCE.Repositories;
 
 namespace T_FORCE.Models
 {
@@ -25,6 +26,50 @@ namespace T_FORCE.Models
         public DateTime DateCreated { get; set; }
         [Required]
         public string Project { get; set; }
+        [Required]
+        public int CustomBoard { get; set; }
+
+        /// <summary>
+        /// Returns true if the board is custom board.
+        /// </summary>
+        public bool IsCustomBoard()
+        {
+            if (CustomBoard == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Checks the board's project and aligns the board column content properly.
+        /// </summary>
+        public async void RefreshBoardContent()
+        {
+
+            if (!this.IsCustomBoard()) //If custom board, do not refresh
+            {
+                ProjectRepository projectRepository = new ProjectRepository();
+                Project currentProject = projectRepository.GetProjectByName(this.Project);
+
+                TaskRepository taskRepository = new TaskRepository();
+                List<Task> tasksInCurrentProject = taskRepository.GetTasksInProject(currentProject);
+
+                foreach (Task task in tasksInCurrentProject)
+                {
+                    int column = this.GetColumnNumber(task.TaskStatus);
+                    this.AddSwim(column, task.Id);
+                }
+
+                KanbanBoardRepository kanbanBoardRepository = new KanbanBoardRepository();
+                await kanbanBoardRepository.UpdateKanbanBoard(this);
+            }
+
+        }
+
 
         //The property here is used for data transfer between Kaban Controller and the CreateBoard view.
         [NotMapped]

@@ -11,10 +11,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Kanban\" />
-  </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\css\sb-admin-2.css" />
     <Content Remove="wwwroot\css\sb-admin-2.min.css" />

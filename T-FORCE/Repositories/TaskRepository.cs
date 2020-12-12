@@ -114,5 +114,14 @@ namespace T_FORCE.Repositories
             Task task = appDbContext.Tasks.Where(task => task.ProjectCode+task.Id == projectCodeId).FirstOrDefault();
             return task;
         }
+
+
+        /// <summary>
+        /// Get tasks assigned to Project.
+        /// </summary>
+        public List<Task> GetTasksInProject(Project project)
+        {
+            return appDbContext.Tasks.Where(task => task.ProjectCode == project.Code).ToList();
+        }
     }
 }

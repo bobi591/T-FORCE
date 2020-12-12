@@ -19,20 +19,20 @@ namespace T_FORCE.Controllers
     {
 
         [Authorize]
-        public IActionResult CreateBoard()
+        public IActionResult CreateCustomBoard()
         {
             return View();
         }
 
         [Authorize][HttpPost]
-        public async Task<IActionResult> CreateBoard(string name, string projectName, List<string> columnName)
+        public async Task<IActionResult> CreateCustomBoard(string name, string projectName, List<string> columnName)
         {
             ModelFactory modelFactory = new ModelFactory();
             KanbanBoardRepository kanbanBoardRepository = new KanbanBoardRepository();
 
             int currentUserId = int.Parse(HttpContext.User.FindFirstValue(Authenticate.UserIdClaim));
 
-            KanbanBoard board = modelFactory.CreateKanbanBoard(name, currentUserId, DateTime.UtcNow, columnName.Count, columnName, projectName);
+            KanbanBoard board = modelFactory.CreateKanbanBoard(name, currentUserId, DateTime.UtcNow, columnName.Count, columnName, projectName, true);
             await kanbanBoardRepository.SaveKanbanBoard(board);
 
             return RedirectToAction("Boards");
@@ -68,23 +68,38 @@ namespace T_FORCE.Controllers
         {
             KanbanBoardRepository kanbanBoardRepository = new KanbanBoardRepository();
 
+            KanbanBoard kanbanBoardToShow = kanbanBoardRepository.GetKanbanBoardById(id);
+
+            if (!kanbanBoardToShow.IsCustomBoard())
+            {
+                kanbanBoardToShow.RefreshBoardContent(); //If the board is not custom board, refresh the Board content before opening!
+            }
+
             return View(kanbanBoardRepository.GetKanbanBoardById(id));
         }
 
         [Authorize][HttpPost]
-        public async Task<IActionResult> AddTask(string taskProjectCodeId, int boardId, string columnDesc)
+        public async Task<IActionResult> TaskColumnSwitch(string taskProjectCodeId, int boardId, string columnDesc)
         {
             KanbanBoardRepository kanbanBoardRepository = new KanbanBoardRepository();
             TaskRepository taskRepository = new TaskRepository();
 
             KanbanBoard kanbanBoard = kanbanBoardRepository.GetKanbanBoardById(Convert.ToString(boardId));
-            int columnNumber = kanbanBoard.GetColumnNumber(columnDesc);
             Task task = taskRepository.GetTaskByProjectCodeId(taskProjectCodeId);
 
-            if (task != null)
+            if (kanbanBoard.IsCustomBoard()) //If the board is custom, do not change the actual task status.
             {
+                int columnNumber = kanbanBoard.GetColumnNumber(columnDesc);
                 kanbanBoard.AddSwim(columnNumber, task.Id);
                 await kanbanBoardRepository.UpdateKanbanBoard(kanbanBoard);
+            }
+            else //If the board is default, change the task status. The board swims will be refreshed automatically on next board view.
+            {
+                if (task != null)
+                {
+                    task.TaskStatus = columnDesc;
+                    await taskRepository.UpdateTask(task);
+                }
             }
 
             return RedirectToAction("Board", new { id = kanbanBoard.Id });
