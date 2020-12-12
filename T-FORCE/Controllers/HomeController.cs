@@ -14,6 +14,10 @@ using T_FORCE.UserInterfaceUtils;
 
 namespace T_FORCE.Controllers
 {
+    /// <summary>
+    /// The main <c>HomeController</c> class.
+    /// Contains methods for performing requests from the Home Page.
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -23,6 +27,11 @@ namespace T_FORCE.Controllers
             _logger = logger;
         }
 
+
+
+        /// <summary>
+        /// Returns the T-Force home page.
+        /// </summary>
         [Authorize]
         public IActionResult Index()
         {
@@ -38,12 +47,24 @@ namespace T_FORCE.Controllers
 
             return View(dictResult);
         }
-
+        /// <summary>
+        /// Returns the T-Force privacy page.
+        /// </summary>
         public IActionResult Privacy()
         {
             return View();
         }
 
+
+        /// <summary>
+        /// HTTP Request - Create new Project.
+        /// </summary>
+        /// <returns>
+        /// Redirection to the home page.
+        /// </returns>
+        /// <param name="projectName">The desired project name.</param>
+        /// <param name="projectCode">The desired project code.</param>
+        /// <param name="taskStatusesElements">List of the available task statuses for tasks assigned to the project.</param>
         public async Task<IActionResult> CreateProject(string projectName, string projectCode, List<string> taskStatusesElements)
         {
             ModelFactory modelFactory = new ModelFactory();

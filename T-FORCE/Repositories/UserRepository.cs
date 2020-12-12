@@ -4,6 +4,10 @@ using T_FORCE.Models;
 
 namespace T_FORCE.Repositories
 {
+    /// <summary>
+    /// The main <c>UserRepository</c> class.
+    /// Contains methods for database related queries related to the User object.
+    /// </summary>
     public class UserRepository
     {
         private static IAppDbContextFactory IAppDbContextFactory = new AppDbContextFactory();

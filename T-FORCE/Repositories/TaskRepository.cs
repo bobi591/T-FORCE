@@ -5,6 +5,10 @@ using T_FORCE.Models;
 
 namespace T_FORCE.Repositories
 {
+    /// <summary>
+    /// The main <c>TaskRepository</c> class.
+    /// Contains methods for database related queries related to the Task object.
+    /// </summary>
     public class TaskRepository
     {
         private static readonly IAppDbContextFactory IAppDbContextFactory = new AppDbContextFactory();

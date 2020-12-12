@@ -30,7 +30,9 @@ namespace T_FORCE.Models
         [Required]
         public bool IsBlocked { get; set; }
 
-
+        /// <summary>
+        /// Get contatenation of first and last name of the current User.
+        /// </summary
         public string GetFirstNameLastName()
         {
             return this.FirstName + " " + this.LastName;

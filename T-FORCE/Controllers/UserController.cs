@@ -11,8 +11,21 @@ using T_FORCE.Models;
 
 namespace T_FORCE.Controllers
 {
+    /// <summary>
+    /// The main <c>UserController</c> class.
+    /// Contains methods for performing requests related to Users.
+    /// </summary>
     public class UserController : Controller
     {
+        /// <summary>
+        /// HTTP Request - Login user. The methods checks if the user is eligible for authentication and generates its claims principals.
+        /// </summary>
+        /// <returns>
+        /// Redirection to the Home page.
+        /// </returns>
+        /// <param name="username">Username of the user to be logged in.</param>
+        /// <param name="password">Password of the user to be logged in.</param>
+        /// <param name="remember">Remember me flag. (1 or 0)</param>
         [HttpPost]
         public async Task<IActionResult> LoginAsync(string username, string password, string remember)
         {
@@ -43,6 +56,19 @@ namespace T_FORCE.Controllers
             }
         }
 
+
+        /// <summary>
+        /// HTTP Request - Register new user. The methods checks if the user is eligible for registration and the required properties are unique.
+        /// </summary>
+        /// <returns>
+        /// Redirection to the Home page.
+        /// </returns>
+        /// <param name="username">Username of the user to be registered.</param>
+        /// <param name="password">Password of the user to be registered.</param>
+        /// <param name="email">Email of the user to be registered.</param>
+        /// <param name="firstName">First name the user to be registered.</param>
+        /// <param name="lastName">Last name the user to be registered.</param>
+        /// <param name="passwordRepeat">Second password for confirmation.</param>
         [HttpPost]
         public async Task<IActionResult> Register
             (string username, string password, string email, string firstName, string lastName, string passwordRepeat)
@@ -70,11 +96,16 @@ namespace T_FORCE.Controllers
                 return View();
             }
         }
-
+        /// <summary>
+        /// Returns the Login page.
+        /// </summary
         public IActionResult Login()
         {
             return View();
         }
+        /// <summary>
+        /// Returns the Register page.
+        /// </summary
         public IActionResult Register()
         {
             return View();

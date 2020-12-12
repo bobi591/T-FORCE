@@ -5,6 +5,10 @@ using T_FORCE.Models;
 
 namespace T_FORCE.Repositories
 {
+    /// <summary>
+    /// The main <c>KanbanBoardRepository</c> class.
+    /// Contains methods for database related queries related to the KanbanBoard object.
+    /// </summary>
     public class KanbanBoardRepository
     {
         private static readonly IAppDbContextFactory IAppDbContextFactory = new AppDbContextFactory();

@@ -21,11 +21,16 @@ namespace T_FORCE.Models
         [Required]
         public string TaskStatuses { get; set; }
 
-
+        /// <summary>
+        /// Sets the available task statuses of the project.
+        /// </summary
         public void SetTaskStatuses(List<string> statuses)
         {
             this.TaskStatuses = JsonConvert.SerializeObject(statuses);
         }
+        /// <summary>
+        /// Gets the available task statuses of the project.
+        /// </summary
         public List<string> GetTaskStatuses()
         {
             return JsonConvert.DeserializeObject<List<string>>(this.TaskStatuses);

@@ -7,10 +7,15 @@ using T_FORCE.Repositories;
 
 namespace T_FORCE.Processes
 {
-    //This class includes checkers for object uniqueness. 
-    //Prior saving a new object to the database, the methods below are checking if the indexing object attributes are unique!
+    /// <summary>
+    /// This class includes checkers for object uniqueness.
+    /// Prior saving a new object to the database, the methods below are checking if the indexing object attributes are unique!
+    /// </summary
     public static class ObjectUniquenessCheck
     {
+        /// <summary>
+        /// Checks if the project code and name are unique.
+        /// </summary
         public static bool ProjectIsUnique(Project project)
         {
             ProjectRepository projectRepository = new ProjectRepository();

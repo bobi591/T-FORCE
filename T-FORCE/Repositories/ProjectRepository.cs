@@ -6,6 +6,10 @@ using T_FORCE.UserInterfaceUtils;
 
 namespace T_FORCE.Repositories
 {
+    /// <summary>
+    /// The main <c>ProjectRepository</c> class.
+    /// Contains methods for database related queries related to the Project object.
+    /// </summary>
     public class ProjectRepository
     {
 

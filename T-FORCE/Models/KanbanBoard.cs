@@ -111,7 +111,7 @@ namespace T_FORCE.Models
         }
 
         /// <summary>
-        /// Puts the task to the column.
+        /// Puts task in a column of the current Kanban Board.
         /// </summary>
         public void AddSwim(int columnNumber, int taskId)
         {

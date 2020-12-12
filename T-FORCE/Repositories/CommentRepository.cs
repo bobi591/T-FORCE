@@ -6,6 +6,10 @@ using T_FORCE.Models;
 
 namespace T_FORCE.Repositories
 {
+    /// <summary>
+    /// The main <c>CommentRepository</c> class.
+    /// Contains methods for database related queries related to the Comment object.
+    /// </summary>
     public class CommentRepository
     {
         private static readonly IAppDbContextFactory IAppDbContextFactory = new AppDbContextFactory();
