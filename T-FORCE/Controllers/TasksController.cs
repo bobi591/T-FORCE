@@ -157,8 +157,11 @@ namespace T_FORCE.Controllers
 
             string userId = HttpContext.User.FindFirstValue(Authenticate.UserIdClaim);
 
-            Comment commentObj = modelFactory.CreateComment(taskId, userId,DateTime.UtcNow, DateTime.UtcNow,comment);
-            await commentRepository.SaveComment(commentObj);
+            if (comment != null)
+            {
+                Comment commentObj = modelFactory.CreateComment(taskId, userId, DateTime.UtcNow, DateTime.UtcNow, comment);
+                await commentRepository.SaveComment(commentObj);
+            }
 
             return RedirectToAction("ViewTask", new { taskId });
 
