@@ -54,11 +54,12 @@
 
         var newColumnLabel = document.getElementById("bColumnNamesLabel");
 
-        if (newColumnLabel.innerHTML == "") {
-            newColumnLabel.innerHTML = "<b>Columns</b>";
-        }
-
         if (columnInput.value != '') {
+
+            if (newColumnLabel.innerHTML == "") {
+                newColumnLabel.innerHTML = "<b>Columns</b>";
+            }
+
             var columnsNewElement = document.createElement("input");
             columnsNewElement.setAttribute('name', 'columnNamesElements');
             columnsNewElement.setAttribute('class', 'list-group-item list-group-item-action');

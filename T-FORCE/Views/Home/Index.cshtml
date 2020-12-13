@@ -151,11 +151,12 @@
 
         var taskStatusesLabel = document.getElementById("taskStatusesLabel");
 
-        if (taskStatusesLabel.innerHTML === "") {
-            taskStatusesLabel.innerHTML = "Task statuses";
-        }
-
         if (taskStatusInput.value != '') {
+
+            if (taskStatusesLabel.innerHTML === "") {
+                taskStatusesLabel.innerHTML = "Task statuses";
+            }
+
             var taskStatusesNewElement = document.createElement("input");
             taskStatusesNewElement.setAttribute('name', 'taskStatusesElements');
             taskStatusesNewElement.setAttribute('class', 'list-group-item list-group-item-action');
