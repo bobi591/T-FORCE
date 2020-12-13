@@ -161,6 +161,14 @@
             <param name="taskId">The Task ID of the task that should be commented.</param>
             <param name="comment">The comment that should be added to the task.</param>
         </member>
+        <member name="M:T_FORCE.Controllers.TasksController.GetTaskTypes">
+            <summary>
+            HTTP Request - Fetch task types (Issue, Epic, Story, etc..).
+            </summary>
+            <returns>
+            JSON array with list of task types.
+            </returns>
+        </member>
         <member name="T:T_FORCE.Controllers.UserController">
             <summary>
             The main <c>UserController</c> class.

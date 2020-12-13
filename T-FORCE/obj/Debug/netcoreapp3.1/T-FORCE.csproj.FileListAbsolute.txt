@@ -771,6 +771,6 @@ C:\Users\Boby Waffles\Desktop\T-FORCE\T-FORCE\obj\Debug\netcoreapp3.1\T-FORCE.cs
 C:\Users\Boby Waffles\Desktop\T-FORCE\T-FORCE\obj\Debug\netcoreapp3.1\staticwebassets\T-FORCE.StaticWebAssets.Manifest.cache
 C:\Users\Boby Waffles\Desktop\T-FORCE\T-FORCE\obj\Debug\netcoreapp3.1\staticwebassets\T-FORCE.StaticWebAssets.xml
 C:\Users\Boby Waffles\Desktop\T-FORCE\T-FORCE\obj\Debug\netcoreapp3.1\T-FORCE.genruntimeconfig.cache
-C:\Users\Boby Waffles\Desktop\T-FORCE\T-FORCE\obj\Debug\netcoreapp3.1\T-FORCE.csprojAssemblyReference.cache
 C:\Users\Boby Waffles\Desktop\T-FORCE\T-FORCE\obj\Debug\netcoreapp3.1\Razor\Views\Kanban\CreateCustomBoard.cshtml.g.cs
 C:\Users\Boby Waffles\Desktop\T-FORCE\T-FORCE\bin\Debug\netcoreapp3.1\T-FORCE.xml
+C:\Users\Boby Waffles\Desktop\T-FORCE\T-FORCE\obj\Debug\netcoreapp3.1\T-FORCE.csprojAssemblyReference.cache

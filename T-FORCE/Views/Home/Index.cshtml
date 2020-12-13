@@ -37,7 +37,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="row">
-                                            <button onclick="window.location.href='/Tasks/ViewTask?id=@task.Id'" type="button" class="btn btn-outline-primary" style="margin: 2%;">Open</button>
+                                            <button onclick="window.location.href='/Tasks/ViewTask?taskId=@task.Id'" type="button" class="btn btn-outline-primary" style="margin: 2%;">Open</button>
                                         </div>
                                         <div class="row">
                                             <button href="/Tasks/Archive?id=@task.Id" ype="button" class="btn btn-outline-warning" style="margin: 2%;">Archive</button>
@@ -76,7 +76,7 @@
                                     </div>
                                     <div class="col">
                                         <div class="row">
-                                            <button onclick="window.location.href='/Tasks/ViewTask?id=@task.Id'" type="button" class="btn btn-outline-primary" style="margin: 2%;">Open</button>
+                                            <button onclick="window.location.href='/Tasks/ViewTask?taskId=@task.Id'" type="button" class="btn btn-outline-primary" style="margin: 2%;">Open</button>
                                         </div>
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@
                 <input type="text" class="form-control form-control-user"
                        id="projectCode" name="projectCode" placeholder="Project code..." required>
 
-                <label for="pTaskStatuses">Task statuses</label>
+                <label id="taskStatusesLabel" for="pTaskStatus"></label>
                 <ul class="list-group" id="taskStatuses" name="taskStatuses">
                 </ul>
 
@@ -149,6 +149,12 @@
 
         var taskStatusInput = document.getElementById("taskStatus");
 
+        var taskStatusesLabel = document.getElementById("taskStatusesLabel");
+
+        if (taskStatusesLabel.innerHTML === "") {
+            taskStatusesLabel.innerHTML = "Task statuses";
+        }
+
         if (taskStatusInput.value != '') {
             var taskStatusesNewElement = document.createElement("input");
             taskStatusesNewElement.setAttribute('name', 'taskStatusesElements');
@@ -165,6 +171,11 @@
 
     //If the Task Statuses li user imput gets empty, remove the element!
     function TaskStatusesLiOnChange(obj) {
+
+        if (document.getElementById("taskStatusesElements") == null) {
+            taskStatusesLabel.innerHTML = "";
+        }
+
         if (obj.value === '') {
             obj.remove();
         }

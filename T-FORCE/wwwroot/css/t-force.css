@@ -1,0 +1,15 @@
+.btn-primary{
+	background-color: #000;
+	border-color: #5e5e5e;
+}
+.btn-primary:hover{
+	background-color: #5e5e5e;
+	border-color: #000;
+}
+.custom-control-input{
+	background-color: #5e5e5e;
+}
+
+.list-group-item{
+	border: 2px solid rgba(0,0,0,.125);
+}

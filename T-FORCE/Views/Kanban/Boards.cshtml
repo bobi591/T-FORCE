@@ -19,9 +19,9 @@
                 </div>
                 <div class="card-body">
                     <label for="bcreationDate"><b>Date of creation</b></label>
-                    <div>@board.DateCreated</div>
+                    <p>@board.DateCreated</p>
                     <label for="bcreationDate"><b>Created by</b></label>
-                    <div>@userRepository.GetUserById(board.CreatedBy).GetFirstNameLastName()</div>
+                    <p>@userRepository.GetUserById(board.CreatedBy).GetFirstNameLastName()</p>
                 </div>
                 <a class="stretched-link" href="Board?id=@board.Id"></a>
             </div>

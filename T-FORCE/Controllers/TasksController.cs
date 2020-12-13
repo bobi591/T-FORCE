@@ -164,5 +164,23 @@ namespace T_FORCE.Controllers
 
         }
 
+        /// <summary>
+        /// HTTP Request - Fetch task types (Issue, Epic, Story, etc..).
+        /// </summary>
+        /// <returns>
+        /// JSON array with list of task types.
+        /// </returns>
+        [Authorize]
+        public JsonResult GetTaskTypes()
+        {
+            List<String> taskTypes = new List<string>();
+
+            foreach (TaskType type in (TaskType[])Enum.GetValues(typeof(TaskType)))
+            {
+                taskTypes.Add(type.ToString());
+            }
+            return Json(taskTypes);
+        }
+
     }
 }
