@@ -41,16 +41,16 @@ namespace T_FORCE.Controllers
         /// </returns>
         /// <param name="name">The desired Kanban Board name.</param>
         /// <param name="projectName">The desired project name of the Kanban Board (the project name should be existing).</param>
-        /// <param name="columnName">List of the columns in the Kanban Board.</param>
+        /// <param name="columnNamesElements">List of the columns in the Kanban Board.</param>
         [Authorize][HttpPost]
-        public async Task<IActionResult> CreateCustomBoard(string name, string projectName, List<string> columnName)
+        public async Task<IActionResult> CreateCustomBoard(string name, string projectName, List<string> columnNamesElements)
         {
             ModelFactory modelFactory = new ModelFactory();
             KanbanBoardRepository kanbanBoardRepository = new KanbanBoardRepository();
 
             int currentUserId = int.Parse(HttpContext.User.FindFirstValue(Authenticate.UserIdClaim));
 
-            KanbanBoard board = modelFactory.CreateKanbanBoard(name, currentUserId, DateTime.UtcNow, columnName.Count, columnName, projectName, true);
+            KanbanBoard board = modelFactory.CreateKanbanBoard(name, currentUserId, DateTime.UtcNow, columnNamesElements.Count, columnNamesElements, projectName, true);
             await kanbanBoardRepository.SaveKanbanBoard(board);
 
             return RedirectToAction("Boards");

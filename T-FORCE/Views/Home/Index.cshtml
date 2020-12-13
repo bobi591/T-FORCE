@@ -134,7 +134,7 @@
                 <div class="modal-footer" id="modalFooter">
                     <input class="btn btn-primary" onclick="GenerateTaskStatusInput()" type="button" value="Add Task Status" />
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-success" value="Save Changes">
+                    <input id="btn-createProject" type="submit" class="btn btn-success" value="Save Changes" disabled>
                 </div>
             </form>
         </div>
@@ -165,6 +165,8 @@
             document.getElementById("taskStatuses").appendChild(taskStatusesNewElement);
 
             taskStatusInput.value = '';
+
+            document.getElementById("btn-createProject").disabled = false;
         }
 
     }
@@ -172,8 +174,11 @@
     //If the Task Statuses li user imput gets empty, remove the element!
     function TaskStatusesLiOnChange(obj) {
 
-        if (document.getElementById("taskStatusesElements") == null) {
+        var taskStatusesList = document.getElementById("taskStatuses");
+
+        if (obj.value === '' && taskStatusesList.childElementCount==1) {
             taskStatusesLabel.innerHTML = "";
+            document.getElementById("btn-createProject").disabled = true;
         }
 
         if (obj.value === '') {
