@@ -160,7 +160,7 @@ namespace T_FORCE.Controllers
             Comment commentObj = modelFactory.CreateComment(taskId, userId,DateTime.UtcNow, DateTime.UtcNow,comment);
             await commentRepository.SaveComment(commentObj);
 
-            return RedirectToAction("ViewTask", new { id=taskId });
+            return RedirectToAction("ViewTask", new { taskId });
 
         }
 
