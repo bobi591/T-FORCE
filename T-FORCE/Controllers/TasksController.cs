@@ -54,6 +54,12 @@ namespace T_FORCE.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// View a task.
+        /// </summary>
+        /// <returns>
+        /// Redirection to the Created Tasks page with model as list of created tasks by the user.
+        /// </returns>
         [Authorize]
         public IActionResult CreatedTasks()
         {
