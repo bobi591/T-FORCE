@@ -21,8 +21,17 @@ namespace T_FORCE.Processes
         private static IAppDbContextFactory IAppDbContextFactory = new AppDbContextFactory();
         private AppDbContext appDbContext = IAppDbContextFactory.CreateAppDbContext();
 
+        /// <summary>
+        /// Identifier of the email claim.
+        /// </summary>
         public readonly static string EmailClaim = "email";
+        /// <summary>
+        /// Identifier of the email claim.
+        /// </summary>
         public readonly static string UsernameClaim = "username";
+        /// <summary>
+        /// Identifier of the email claim.
+        /// </summary>
         public readonly static string UserIdClaim = "userId";
 
 

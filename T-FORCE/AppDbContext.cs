@@ -18,13 +18,16 @@ namespace T_FORCE
         {
         }
 
+        /// <summary>
+        /// Sets the model properties before at startup.
+        /// </summary>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Fluent API for composite primary key in User model
+            //Fluent API for Composite Primary Key in User model
             modelBuilder.Entity<User>()
                 .HasKey(user => new { user.Id, user.Username, user.Email });
 
-            //Fluent API for composite primary key in Project model
+            //Fluent API for Composite Primary Key in Project model
             modelBuilder.Entity<Project>()
                 .HasKey(project => new { project.Id, project.Name , project.Code });
         }
@@ -39,11 +42,13 @@ namespace T_FORCE
     }
 
     /// <summary>
-    /// Creates application context with concrete option settings.
+    /// AppDBContect factory implementing by the IAppDbContextFactory inteface.
     /// </summary>
-
     public class AppDbContextFactory : IAppDbContextFactory
     {
+        /// <summary>
+        /// Creates application context with concrete option settings.
+        /// </summary>
         public AppDbContext CreateAppDbContext()
         {
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
@@ -61,7 +66,9 @@ namespace T_FORCE
     }
 
 
-
+    /// <summary>
+    /// Factory interface for accessing db context in other classes.
+    /// </summary>
     public interface IAppDbContextFactory
     {
         public AppDbContext CreateAppDbContext();
