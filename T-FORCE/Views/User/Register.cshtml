@@ -45,7 +45,12 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    @ViewBag.Message
+                                    @if (ViewBag.Message != null)
+                                    {
+                                        <div class="alert alert-warning" role="alert">
+                                            @ViewBag.Message
+                                        </div>
+                                    }
                                 </div>
                                 <input type="submit" value="Register Account" class="btn btn-primary btn-user btn-block" />
                                 <hr>

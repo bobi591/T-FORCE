@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace T_FORCE.UserInterfaceUtils
+namespace T_FORCE.UI
 {
     public static class PredefinedViewBag
     {

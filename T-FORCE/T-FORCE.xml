@@ -4,9 +4,24 @@
         <name>T-FORCE</name>
     </assembly>
     <members>
+        <member name="M:T_FORCE.AppDbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            Sets the model properties before at startup.
+            </summary>
+        </member>
         <member name="T:T_FORCE.AppDbContextFactory">
             <summary>
+            AppDBContect factory implementing by the IAppDbContextFactory inteface.
+            </summary>
+        </member>
+        <member name="M:T_FORCE.AppDbContextFactory.CreateAppDbContext">
+            <summary>
             Creates application context with concrete option settings.
+            </summary>
+        </member>
+        <member name="T:T_FORCE.IAppDbContextFactory">
+            <summary>
+            Factory interface for accessing db context in other classes.
             </summary>
         </member>
         <member name="T:T_FORCE.Controllers.HomeController">
@@ -297,6 +312,21 @@
             <summary>
             Implements the complete authentication process of the application.
             GetClaimsPrincipal() method returns a ClaimsPrincipal used in the User controller for authentication.
+            </summary>
+        </member>
+        <member name="F:T_FORCE.Processes.Authenticate.EmailClaim">
+            <summary>
+            Identifier of the email claim.
+            </summary>
+        </member>
+        <member name="F:T_FORCE.Processes.Authenticate.UsernameClaim">
+            <summary>
+            Identifier of the email claim.
+            </summary>
+        </member>
+        <member name="F:T_FORCE.Processes.Authenticate.UserIdClaim">
+            <summary>
+            Identifier of the email claim.
             </summary>
         </member>
         <member name="M:T_FORCE.Processes.Authenticate.GetClaimsPrincipal(System.String,System.String)">
