@@ -19,10 +19,11 @@
                 <input type="text" class="form-control" placeholder="Enter Task Name" name="name" required>
 
                 <label for="tdescription"><b>Task content</b></label>
-                <textarea id="summernote" name="description"></textarea>
-
+                <div class="task-description">
+                    <textarea id="summernote" name="description"></textarea>
+                </div>
                 <label for="projectSelector"><b>Project</b></label>
-                <select id="projectName" name="projectName" class="form-control" 
+                <select id="projectName" name="projectName" class="form-control"
                         onchange="FetchSelectedProjectStatuses()" required>
                     @{
                         ProjectRepository projectRepository = new ProjectRepository();
