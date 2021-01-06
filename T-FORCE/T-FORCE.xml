@@ -109,6 +109,16 @@
             <param name="boardId">The Kanban Board ID.</param>
             <param name="columnDesc">The destination column name. (ex. In Progress, Resolved)</param>
         </member>
+        <member name="M:T_FORCE.Controllers.KanbanController.Comment(System.String,System.String)">
+            <summary>
+            HTTP Request - Add comment in the task.
+            </summary>
+            <returns>
+            Redirection to the View Task page with updated task entity as model.
+            </returns>
+            <param name="taskId">The Task ID of the task that should be commented.</param>
+            <param name="comment">The comment that should be added to the task.</param>
+        </member>
         <member name="T:T_FORCE.Controllers.TasksController">
             <summary>
             The main <c>TasksController</c> class.

@@ -144,10 +144,38 @@ namespace T_FORCE.Controllers
                 {
                     task.TaskStatus = columnDesc;
                     await taskRepository.UpdateTask(task);
+                    string statusChangedAutomatedComment =
+                        "<p><i> (Automated message) The status has been changed to " + columnDesc + " via Kanban Board.</i></p>";
+
+                    await Comment(Convert.ToString(task.Id), statusChangedAutomatedComment);
                 }
             }
 
             return RedirectToAction("Board", new { id = kanbanBoard.Id });
+        }
+        /// <summary>
+        /// HTTP Request - Add comment in the task.
+        /// </summary>
+        /// <returns>
+        /// Redirection to the View Task page with updated task entity as model.
+        /// </returns>
+        /// <param name="taskId">The Task ID of the task that should be commented.</param>
+        /// <param name="comment">The comment that should be added to the task.</param>
+        [Authorize]
+        [HttpPost]
+        public async System.Threading.Tasks.Task Comment(string taskId, string comment)
+        {
+            ModelFactory modelFactory = new ModelFactory();
+            CommentRepository commentRepository = new CommentRepository();
+
+            string userId = HttpContext.User.FindFirstValue(Authenticate.UserIdClaim);
+
+            if (comment != null)
+            {
+                Comment commentObj = modelFactory.CreateComment(taskId, userId, DateTime.UtcNow, DateTime.UtcNow, comment);
+                await commentRepository.SaveComment(commentObj);
+            }
+
         }
     }
 }
