@@ -118,8 +118,16 @@ namespace T_FORCE.Controllers
 
             Models.Task task = taskRepository.GetTaskById(taskId);
 
-            task.TaskStatus = taskStatuses;
-            await taskRepository.UpdateTask(task);
+            if (task.TaskStatus != taskStatuses)
+            {
+                task.TaskStatus = taskStatuses;
+                await taskRepository.UpdateTask(task);
+
+                string statusChangedAutomatedComment = 
+                    "<p><i> (Automated message) The status has been changed to " + taskStatuses + ".</i></p>";
+
+                await Comment(taskId, statusChangedAutomatedComment);
+            }
 
             return View("ViewTask", task);
         }
