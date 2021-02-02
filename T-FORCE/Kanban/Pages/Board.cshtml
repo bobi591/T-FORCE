@@ -30,10 +30,10 @@
                             foreach (T_FORCE.Tasks.Models.Task task in tasksInCurrentColumn)
                             {
                                 <!--Task collapsable card-->
-                                <div class="card shadow mb-4" name="@task.ProjectCode@task.Id">
+                                <div class="card shadow mb-4" style="font-size: 90%;" name="@task.ProjectCode@task.Id">
                                     <!-- Card Header - Accordion -->
                                     <a href="#collapseCardCreatedTask-@task.Id" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseCardCreatedTask-@task.Id">
-                                        <h6 class="m-0 font-weight-bold text-primary">@task.ProjectCode@task.Id - @task.Name</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary" style="font-size: 90%;">@task.ProjectCode@task.Id - @task.Name</h6>
                                     </a>
                                     <!-- Card Content - Collapse -->
                                     <div class="collapse" id="collapseCardCreatedTask-@task.Id" style="">
@@ -51,10 +51,10 @@
                                                 </div>
                                                 <div class="col">
                                                     <div class="row">
-                                                        <button onclick="window.location.href='/Tasks/ViewTask?taskId=@task.Id'" type="button" class="btn btn-outline-primary" style="margin: 2%;">Open</button>
+                                                        <button onclick="window.location.href='/Tasks/ViewTask?taskId=@task.Id'" type="button" class="btn btn-outline-primary" style="margin: 2%; font-size: 90%;">Open</button>
                                                     </div>
                                                     <div class="row">
-                                                        <button href="/Tasks/Archive?id=@task.Id" ype="button" class="btn btn-outline-warning" style="margin: 2%;">Archive</button>
+                                                        <button href="/Tasks/Archive?id=@task.Id" ype="button" class="btn btn-outline-warning" style="margin: 2%; font-size: 90%;">Archive</button>
                                                     </div>
                                                 </div>
                                             </div>
