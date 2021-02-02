@@ -1,0 +1,126 @@
+﻿@model T_FORCE.Tasks.Models.Task
+@using T_FORCE.EntityFramework;
+
+
+@{ ViewData["Title"] = Model.ProjectCode + Model.Id + " - " + Model.Name;
+    ProjectRepository projectRepository = new ProjectRepository();
+    Layout = "/GenericViews/Shared/_Layout.cshtml";}
+
+<!--This script inclusion should be here only, because it enables summernote but does not glich the card expansion functionality!-->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+<div id="container" style="padding: 2%">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">@Model.ProjectCode@Model.Id - @Model.Name</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-8">
+                    <label for="tdescription"><b>Description</b></label>
+                    <div class="task-description">
+                        @Html.Raw(Model.Description)
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="tid"><b>Task ID</b></label>
+                    <p>@Model.ProjectCode@Model.Id</p>
+                    <label for="tstatus"><b>Status</b></label>
+                    <p>@Model.TaskStatus</p>
+                    <label for="ttype"><b>Type</b></label>
+                    <p>@Model.Type</p>
+                    <label for="tdatecreated"><b>Date created</b></label>
+                    <p>@Model.DateCreated</p>
+                    <label for="texpectedenddate"><b>Expected end date</b></label>
+                    <p>@Model.ExpectedEndDate</p>
+                    <label for="tassignee"><b>Assignee</b></label>
+                    <p>@Model.GetAssigneeFirstLastName()</p>
+                    <label for="tProject"><b>Project</b></label>
+                    <p>@projectRepository.GetProjectByCode(Model.ProjectCode).Name</p>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <button onclick="window.location.href='/Tasks/AssignToMe?taskId=@Model.Id'" type="button" class="btn btn-outline-success" style="margin: 2%;">Assign to me</button>
+                    </div>
+                    <div class="row">
+                        <button data-toggle="modal" data-target="#changeStatusModal" type="button" class="btn btn-outline-primary" style="margin: 2%;">Change status</button>
+                    </div>
+                    <div class="row">
+                        <button href="/Tasks/Archive?id=@Model.Id" type="button" class="btn btn-outline-warning" style="margin: 2%;">Archive</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("_Comments")
+</div>
+
+<!-- Change status modal -->
+<div class="modal fade" id="changeStatusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Change status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="@Url.Action("ChangeTaskStatus","Tasks")">
+                <input type="text" name="taskId" hidden value="@Model.Id">
+                <div class="modal-body">
+                    <select id="taskStatuses" name="taskStatuses" class="form-control">
+                        <option value="Select">Task status</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-success" value="Save Changes">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Task status options filler -->
+<script type="text/javascript">
+    $(function () {
+
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                placeholder: 'Task description...',
+                tabsize: 1,
+                height: 100
+            });
+        });
+
+        AjaxCall('/Tasks/GetTaskStatuses', null).done(function (response) {
+            if (response.length > 0) {
+                $('#taskStatuses').html('');
+                var options = '';
+                for (var i = 0; i < response.length; i++) {
+                    if (response[i] === '@Model.TaskStatus') {
+                        options += '<option selected name="taskStatus" value="' + response[i] + '" text="' + response[i] + '">' + response[i] + '</option>';
+                    }
+                    else {
+                        options += '<option name="taskStatus" value="' + response[i] + '" text="' + response[i] + '">' + response[i] + '</option>';
+                    }
+                }
+                $('#taskStatuses').append(options);
+
+            }
+        }).fail(function (error) {
+            alert(error.StatusText);
+        });
+
+        function AjaxCall(url, data, type) {
+            return $.ajax({
+                url: url,
+                type: type ? type : 'GET',
+                //TODO: Fix hardcoded values!! Make the data passed from the function call!
+                data: {projectCode: "@Model.ProjectCode"}, //Hardcoded value!
+                contentType: 'application/json'
+            });
+        }
+    });
+</script>

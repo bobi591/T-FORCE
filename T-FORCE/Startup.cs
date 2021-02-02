@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace T_FORCE
 {
@@ -26,6 +27,23 @@ namespace T_FORCE
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<RazorViewEngineOptions>(o =>
+            {
+                o.ViewLocationFormats.Clear();
+
+                o.ViewLocationFormats.Add
+                    ("/{1}/Pages/{0}" + RazorViewEngine.ViewExtension);
+
+                o.ViewLocationFormats.Add
+                    ("/Users/Pages/{0}" + RazorViewEngine.ViewExtension);
+
+                o.ViewLocationFormats.Add
+                    ("/GenericViews/Shared/{0}" + RazorViewEngine.ViewExtension);
+
+                o.PageViewLocationFormats.Add
+                ("/{1}/Pages/Partials/{0}" + RazorViewEngine.ViewExtension);
+
+            });
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,

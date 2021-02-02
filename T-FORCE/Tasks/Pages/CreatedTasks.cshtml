@@ -1,0 +1,33 @@
+﻿@model List<T_FORCE.Tasks.Models.Task>
+
+@{ ViewData["Title"] = "Created Tasks";
+    Layout = "/GenericViews/Shared/_Layout.cshtml";}
+
+
+
+    <div id="container" style="padding: 2%">
+        <h1 class="h3 mb-1 text-gray-800">Created Tasks</h1>
+        <p class="mb-4">Tasks created by you</p>
+
+        @{
+            foreach (T_FORCE.Tasks.Models.Task task in Model)
+            {
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">
+                            @task.ProjectCode@task.Id - @task.Name
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <label for="tdescription"><b>Description</b></label>
+                        <div class="task-description">
+                            @Html.Raw(@task.Description)
+                        </div>
+                        <label for="tassignee"><b>Assignee</b></label>
+                        <p>@task.GetAssigneeFirstLastName()</p>
+                    </div>
+                    <a class="stretched-link" href="ViewTask?taskId=@task.Id"></a>
+                </div>
+            }
+        }
+    </div>

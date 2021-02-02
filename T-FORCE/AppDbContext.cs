@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using T_FORCE.Models;
-using Task = T_FORCE.Models.Task;
+using T_FORCE.Kanban.Models;
+using T_FORCE.Tasks.Models;
+using T_FORCE.Users.Models;
 
 namespace T_FORCE
 {
@@ -35,7 +36,7 @@ namespace T_FORCE
         //Entities
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<Tasks.Models.Task> Tasks { get; set; }
         public DbSet<KanbanBoard> KanbanBoards { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Comment> Comments { get; set; }

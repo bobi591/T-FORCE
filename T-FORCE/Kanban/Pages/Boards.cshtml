@@ -1,0 +1,31 @@
+﻿@{ ViewData["Title"] = "Boards";
+    Layout = "/GenericViews/Shared/_Layout.cshtml";}
+
+@model List<T_FORCE.Kanban.Models.KanbanBoard>
+@using T_FORCE.EntityFramework;
+
+<div id="container" style="padding: 2%">
+    <h1 class="h3 mb-1 text-gray-800">Kanban Boards</h1>
+    <p class="mb-4">Defined Kanban Boards</p>
+
+    @{
+        UserRepository userRepository = new UserRepository();
+        foreach (T_FORCE.Kanban.Models.KanbanBoard board in Model)
+        {
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        @board.Name
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <label for="bcreationDate"><b>Date of creation</b></label>
+                    <p>@board.DateCreated</p>
+                    <label for="bcreationDate"><b>Created by</b></label>
+                    <p>@userRepository.GetUserById(board.CreatedBy).GetFirstNameLastName()</p>
+                </div>
+                <a class="stretched-link" href="Board?id=@board.Id"></a>
+            </div>
+        }
+    }
+</div>
