@@ -1,5 +1,5 @@
 # T-FORCE
-ASP.NET Core based project task management and interactive Kanban boards.
+ASP.NET Core based project task management with interactive Kanban boards.
 
 <h3>Introduction</h3>
 
