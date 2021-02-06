@@ -21,8 +21,8 @@ using T_FORCE.Users.Processes;
 namespace T_FORCE.API.Controllers
 {
     /// <summary>
-    /// The main <c>TForce API</c> class.
-    /// Contains methods for performing requests related to the TForce API.
+    /// The main <c>Base API</c> class.
+    /// Contains methods for performing HTTP requests related to the TForce API.
     /// </summary>
     public class BaseAPI : Controller
     {
@@ -87,6 +87,8 @@ namespace T_FORCE.API.Controllers
                 MemoryStream memoryStream = new MemoryStream();
 
                 resultExcel.SaveAs(memoryStream);
+
+                resultExcel.Dispose();
 
                 result.Dispose();
 
